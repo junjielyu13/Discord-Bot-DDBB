@@ -1,3 +1,13 @@
+## Configuration Discord Bot:
+
+Official Documentation: https://discordjs.guide/creating-your-bot/
+
+Discord Bot: https://discord.com/developers/applications
+
+add Discord Bot: https://discord.com/api/oauth2/authorize?client_id=1079873780597403668&permissions=8&scope=bot%20applications.commands
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
