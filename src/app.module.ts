@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 
 import { DiscordModule } from '@discord-nestjs/core';
 import { GatewayIntentBits } from 'discord.js';
+import { BotModule } from './bot.module';
 
 import * as dotenv from 'dotenv';
 
@@ -20,6 +21,7 @@ dotenv.config();
         },
       }),
     }),
+    BotModule,
   ],
   controllers: [AppController],
   providers: [AppService],
