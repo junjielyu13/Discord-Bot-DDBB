@@ -7,7 +7,7 @@ import { CommandInteraction } from 'discord.js';
   description: 'test ping',
 })
 @Injectable()
-export class pingCommand {
+export class PingCommand {
   @Handler()
   onPlaylist(interaction: CommandInteraction): string {
     return 'pong';

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppController } from '../controller/app.controller';
+import { AppService } from '../service/app.service';
 
 import { DiscordModule } from '@discord-nestjs/core';
 import { GatewayIntentBits } from 'discord.js';
 import { BotModule } from './bot.module';
-import { pingModule } from './ping.module';
+import { PingModule } from './ping.module';
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -26,7 +26,7 @@ dotenv.config();
       }),
     }),
     BotModule,
-    pingModule,
+    PingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

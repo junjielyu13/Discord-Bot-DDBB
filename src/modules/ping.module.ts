@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { DiscordModule } from '@discord-nestjs/core';
-import { BotGateway } from './bot.gateway';
+import { PingCommand } from '../commands/ping.command';
 
 @Module({
   imports: [DiscordModule.forFeature()],
-  providers: [BotGateway],
+  providers: [PingCommand],
 })
-export class BotModule {}
+export class PingModule {}
