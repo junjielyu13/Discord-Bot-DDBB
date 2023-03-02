@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  #Node Service
+  discord-bot-app:
+    container_name: discord-bot-app
+    image: discord-bot/node
+    build:
+      context: .
+      target: development
+      dockerfile: Dockerfile
+    tty: true
+    working_dir: /usr/src/app
+    ports:
+      - 3000:3000
+      - 9229:9229
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - discord-bot-network
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+    command: npm run start:dev
+    #command: npm run nodemon
+    restart: unless-stopped
+
+  #PostgreSQl Service
+  postgres:
+    image: postgres:14.1-alpine
+    container_name: discord-bot-postgres
+    restart: unless-stopped
+    tty: true
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=discord
+    ports:
+      - '5432:5432'
+    volumes:
+      - discord-bot-db:/usr/data/mongo/
+    networks:
+      - discord-bot-network
+
+  #pgAdmin Service
+  #PostgreSQL pgAdmin panel accessible at http://localhost:16543/
+  discord-bot-pgadmin:
+    image: dpage/pgadmin4
+    container_name: discord-bot-pgadmin
+    restart: unless-stopped
+    tty: true
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'jfjunjieli@gmail.com'
+      PGADMIN_DEFAULT_PASSWORD: 'password'
+    ports:
+      - '16543:16543'
+    depends_on:
+      - postgres
+    volumes:
+      - discord-bot-db:/usr/data/pgAdmin/
+    networks:
+      - discord-bot-network
+
+#Docker Networks
+networks:
+  discord-bot-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  discord-bot-db:
+    driver: local
