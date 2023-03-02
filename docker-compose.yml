@@ -53,10 +53,10 @@ services:
     restart: unless-stopped
     tty: true
     environment:
-      PGADMIN_DEFAULT_EMAIL: 'jfjunjieli@gmail.com'
+      PGADMIN_DEFAULT_EMAIL: 'pgadmin@gmail.com'
       PGADMIN_DEFAULT_PASSWORD: 'password'
     ports:
-      - '16543:16543'
+      - '16543:80'
     depends_on:
       - postgres
     volumes:
