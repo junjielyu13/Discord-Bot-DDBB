@@ -1,0 +1,8 @@
+{
+  "verbose": false,
+  "watch": ["src", "prisma", "public", "test"],
+  "ignore": ["node_modules"],
+  "ext": "js ts json prisma",
+  "quiet": true,
+  "exec": "nodemon --legacy-watch -x ts-node src/main.ts"
+}

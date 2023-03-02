@@ -24,8 +24,7 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3000
-    command: npm run start:dev
-    #command: npm run nodemon
+    command: npm run nodemon
     restart: unless-stopped
 
   #PostgreSQl Service
