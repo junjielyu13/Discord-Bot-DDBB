@@ -6,6 +6,7 @@ import { DiscordModule } from '@discord-nestjs/core';
 import { GatewayIntentBits } from 'discord.js';
 import { BotModule } from './bot.module';
 import { PingModule } from './ping.module';
+import { PrismaModule } from '../prisma/prisma.module';
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -27,6 +28,7 @@ dotenv.config();
     }),
     BotModule,
     PingModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
