@@ -1,22 +1,18 @@
-import { Controller, Post, Req, Body } from '@nestjs/common';
+import { Controller, Post, Req, Get, Body, Query, Param } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
+import { User as UserModel, Post as PostModel, Prisma } from '@prisma/client';
 
 @Controller('db')
 export class PrismaController {
   constructor(private readonly prismaService: PrismaService) {}
-  // @Post('createGame')
-  // createGame(@Request() req): any {
-  //   return this.prismaService.createGame(req);
-  // }
-  // @Post('createPlayer')
-  // createPlayer(@Request() req): any {
-  //   return this.prismaService.createPlayer(req);
-  // }
 
-  // @Post('createPlayer')
-  // createPlayer(@Req() req): any {
-  //   console.log("query:" + req.query);
-  //   console.log("body: " + req.body);
-  //   return this.prismaService.testAdd(parseInt(req.query.value));
-  // }
+  @Get('user')
+  async createDraft(): Promise<any> {
+    return this.prismaService.user.create({
+      data: {
+        name: 'Alice',
+        email: 'alice@prisma.io',
+      },
+    });
+  }
 }
