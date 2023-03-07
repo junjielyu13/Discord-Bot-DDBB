@@ -9,6 +9,18 @@
 - [ ] npm install
 - [ ] npx prisma db push
 
+> DDBB configuration
+
+- pgadmin web: http://localhost:16543/
+- emal: pgadmin@gmail.com
+- passwrod: password
+
+- name: test
+- port: 5432
+- hostname: postgres
+- username: root
+- password: root
+
 > nest:
 > `nest ...`
 
