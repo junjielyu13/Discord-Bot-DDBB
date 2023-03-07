@@ -7,6 +7,7 @@ import { GatewayIntentBits } from 'discord.js';
 import { BotModule } from './bot.module';
 import { PingModule } from './ping.module';
 import { PrismaModule } from '../prisma/prisma.module';
+import { DBModule } from '../db/db.module';
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -29,6 +30,7 @@ dotenv.config();
     BotModule,
     PingModule,
     PrismaModule,
+    DBModule,
   ],
   controllers: [AppController],
   providers: [AppService],
