@@ -128,7 +128,7 @@ RUN npm install prisma --save-dev
 COPY . .
 
 # Build the app to the /dist folder
-RUN npm run build
+# RUN npm run build
 
 
 EXPOSE 3000
