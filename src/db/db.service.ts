@@ -8,8 +8,8 @@ export class DBService {
   async addUser(): Promise<any> {
     return this.prismaService.user.create({
       data: {
-        name: 'AlSDSdsddsdsssDicdsesds',
-        email: 'alidfdsSSDSsdsDSDDSsddsdscesdsd@prismDsdsSDSDa.sdsdsdsdio',
+        name: '9999999999999',
+        email: '99999999999999999999',
       },
     });
   }

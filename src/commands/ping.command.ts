@@ -10,11 +10,15 @@ import { HttpService } from '@nestjs/axios';
 })
 @Injectable()
 export class PingCommand {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly http: HttpService) {}
 
   @Handler()
-  async onPlaylist(interaction: CommandInteraction): Promise<any> {
-    await this.httpService.get('http://localhost:3000/prisma/user');
-    return 'pong';
+  async onPlaylist(): Promise<any> {
+    this.http
+      .get('http://localhost:3000/prisma/user')
+      .toPromise()
+      .then((res) => res.data);
+
+    return 'test';
   }
 }
