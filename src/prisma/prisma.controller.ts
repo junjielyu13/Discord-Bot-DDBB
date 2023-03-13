@@ -10,8 +10,8 @@ export class PrismaController {
   async createDraft(): Promise<any> {
     return this.prismaService.user.create({
       data: {
-        name: '9999999999999999999',
-        email: '999999999999999999999',
+        name: '10000000000000000000',
+        email: '1000000000000000000000',
       },
     });
   }
