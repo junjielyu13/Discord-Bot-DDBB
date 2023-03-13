@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { On, Once, InjectDiscordClient } from '@discord-nestjs/core';
-import { Client, Message } from 'discord.js';
+import { Client, Message, VoiceChannel, VoiceState } from 'discord.js';
 
 import { EmbedBuilder } from 'discord.js';
 
@@ -36,6 +36,16 @@ export class BotGateway {
       `);
     }
 
+    // TODO SAVE ON DDBB
+  }
+
+  @On('voiceStateUpdate')
+  async onVoice(voiceState: VoiceState): Promise<void> {
+    const userId = voiceState.member.id;
+    const channelName = voiceState.channel.name;
+    const channelId = voiceState.channel.id;
+
+    this.logger.log(`update!! ${userId}  ${channelId} ${channelName}  `);
     // TODO SAVE ON DDBB
   }
 }
