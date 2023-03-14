@@ -14,6 +14,19 @@ export class BotGateway {
 
   @Once('ready')
   onReady() {
+    this.client.guilds.cache
+      .get('867849049583255553')
+      .members.fetch({ withPresences: true })
+      .then((fetchedMembers) => {
+        const totalOnline = fetchedMembers.filter(
+          (member) => member.presence?.status != 'online',
+        );
+        // Now you have a collection with all online member objects in the totalOnline variable
+        this.logger.log(
+          `There are currently ${totalOnline.size} members online in this guild!`,
+        );
+      });
+
     this.logger.log(`Bot ${this.client.user.tag} was started!`);
   }
 
