@@ -10,28 +10,91 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
-}
+// model Post {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   title     String   @db.VarChar(255)
+//   content   String?
+//   published Boolean  @default(false)
+//   author    User     @relation(fields: [authorId], references: [id])
+//   authorId  Int
+// }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
-}
+// model Profile {
+//   id     Int     @id @default(autoincrement())
+//   bio    String?
+//   user   User    @relation(fields: [userId], references: [id])
+//   userId Int     @unique
+// }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  profile Profile?
+  id          Int     @id @default(autoincrement())
+  user_id     Int     @unique
+  user_name   String
+  // email   String   @unique
+  role        String
+  status      String  
+
+  // posts   Post[]
+  // profile Profile?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+model Server{
+  id          Int       @id @default(autoincrement())
+  ServerId    Int       @unique
+  ServerName  String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Channel{
+  id            Int      @id @default(autoincrement())
+  channel_id    Int      @unique
+  channel_name  String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Comment{
+  id          Int      @id @default(autoincrement())
+  comment_id  Int      @unique  
+  server_id   Int 
+  channel_id  Int 
+  user_id     Int 
+  message     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Command{
+  id          Int       @id @default(autoincrement())
+  command_id  Int       @unique  
+  server_id   Int 
+  channel_id  Int 
+  user_id     Int 
+  info        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+model Diary{
+  id        Int       @id @default(autoincrement())
+  diary_id  Int       @unique
+  server_id Int
+  data      DateTime
+  amount    Int
+}
+
+model UserChannelTime{
+  id          Int       @id @default(autoincrement())
+  user_id     Int       @unique
+  server_id   Int
+  channel_id  Int
+  enter_time  DateTime
+  exit_time   DateTime
 }
