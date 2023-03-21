@@ -10,91 +10,83 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model Post {
-//   id        Int      @id @default(autoincrement())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   title     String   @db.VarChar(255)
-//   content   String?
-//   published Boolean  @default(false)
-//   author    User     @relation(fields: [authorId], references: [id])
-//   authorId  Int
-// }
-
-// model Profile {
-//   id     Int     @id @default(autoincrement())
-//   bio    String?
-//   user   User    @relation(fields: [userId], references: [id])
-//   userId Int     @unique
-// }
 
 model User {
-  id          Int     @id @default(autoincrement())
-  user_id     Int     @unique
-  user_name   String
-  // email   String   @unique
-  role        String
-  status      String  
-
-  // posts   Post[]
-  // profile Profile?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                Int               @id @default(autoincrement())
+  userId            Int               @unique
+  userName          String
+  role              String
+  visibility        Boolean 
+  comments          Comment[] 
+  commends          Command[] 
+  servers           Server[]
+  userChannelTimes  UserChannelTime[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
 }
 
-
 model Server{
-  id          Int       @id @default(autoincrement())
-  ServerId    Int       @unique
-  ServerName  String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id                Int               @id @default(autoincrement())
+  ServerId          Int               @unique
+  ServerName        String
+  users             User[]
+  channels          Channel[]
+  diarys            Diary[]
 }
 
 model Channel{
-  id            Int      @id @default(autoincrement())
-  channel_id    Int      @unique
-  channel_name  String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id                Int               @id @default(autoincrement())
+  channelId         Int               @unique 
+  channelName       String            
+  channelType       String
+  server            Server            @relation(fields: [serverId], references: [id])
+  serverId          Int
+  comments          Comment[] 
+  commends          Command[] 
+  userChannelTimes  UserChannelTime[]
+
 }
+
 
 model Comment{
-  id          Int      @id @default(autoincrement())
-  comment_id  Int      @unique  
-  server_id   Int 
-  channel_id  Int 
-  user_id     Int 
-  message     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                Int           @id @default(autoincrement())
+  commentId         Int           @unique  
+  user              User          @relation(fields: [userId], references: [id])
+  userId            Int  
+  channel           Channel       @relation(fields: [ChannelID], references: [id])
+  ChannelID         Int 
+  message           String
+  releaseAt         DateTime      @default(now())
 }
 
+
 model Command{
-  id          Int       @id @default(autoincrement())
-  command_id  Int       @unique  
-  server_id   Int 
-  channel_id  Int 
-  user_id     Int 
-  info        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                Int           @id @default(autoincrement())
+  commandId         Int           @unique  
+  user              User          @relation(fields: [userId], references: [id])
+  userId            Int 
+  channel           Channel       @relation(fields: [ChannelID], references: [id])
+  ChannelID         Int 
+  description       String
+  releaseAt         DateTime      @default(now())
 }
 
 
 model Diary{
-  id        Int       @id @default(autoincrement())
-  diary_id  Int       @unique
-  server_id Int
-  data      DateTime
-  amount    Int
+  id                Int           @id @default(autoincrement())
+  diaryId           Int           @unique
+  server            Server        @relation(fields: [serverId], references: [id])
+  serverId          Int
+  amount            Int
+  createdAt         DateTime      @default(now())
 }
+
 
 model UserChannelTime{
   id          Int       @id @default(autoincrement())
-  user_id     Int       @unique
-  server_id   Int
-  channel_id  Int
-  enter_time  DateTime
-  exit_time   DateTime
+  time        DateTime 
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int 
+  channel     Channel      @relation(fields: [ChannelID], references: [id])
+  ChannelID   Int 
 }
