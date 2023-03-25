@@ -15,23 +15,34 @@ model User {
   id                Int               @id @default(autoincrement())
   userId            Int               @unique
   userName          String
-  role              String
-  visibility        Boolean 
   comments          Comment[] 
   commends          Command[] 
-  servers           Server[]
+  registreUsers     RegistreUser[]
   userChannelTimes  UserChannelTime[]
+}
+
+
+model RegistreUser{
+  id                Int               @id @default(autoincrement())
+  user              User              @relation(fields: [userId], references: [id])
+  userId            Int  
+  server            Server            @relation(fields: [serverId], references: [id])
+  serverId          Int
+  userName          String
+  role              String
+  visibility        Boolean 
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
 }
+
 
 model Server{
   id                Int               @id @default(autoincrement())
   ServerId          Int               @unique
   ServerName        String
-  users             User[]
   channels          Channel[]
   diarys            Diary[]
+  registreUsers     RegistreUser[]
 }
 
 model Channel{
@@ -83,9 +94,9 @@ model Diary{
 
 
 model UserChannelTime{
-  id          Int       @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   time        DateTime 
-  user        User      @relation(fields: [userId], references: [id])
+  user        User         @relation(fields: [userId], references: [id])
   userId      Int 
   channel     Channel      @relation(fields: [ChannelID], references: [id])
   ChannelID   Int 
