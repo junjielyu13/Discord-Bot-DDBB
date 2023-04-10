@@ -75,7 +75,7 @@ export class BotGateway {
     let channelId = -1;
 
     if (!message.author.bot) {
-      const user = await this.http
+      await this.http
         .get('http://localhost:3000/prisma/getUser', {
           params: { userId: message.author.id },
         })
@@ -84,7 +84,7 @@ export class BotGateway {
           userId = user.data.id;
         });
 
-      const channel = await this.http
+      await this.http
         .get('http://localhost:3000/prisma/getChannel', {
           params: { channelId: message.channel.id },
         })
@@ -111,7 +111,7 @@ export class BotGateway {
     let channelId = -1;
 
     if (action) {
-      const user = await this.http
+      await this.http
         .get('http://localhost:3000/prisma/getUser', {
           params: { userId: action.user.id },
         })
@@ -120,7 +120,7 @@ export class BotGateway {
           userId = user.data.id;
         });
 
-      const channel = await this.http
+      await this.http
         .get('http://localhost:3000/prisma/getChannel', {
           params: { channelId: action.channel.id },
         })
@@ -141,12 +141,17 @@ export class BotGateway {
   }
 
   @On('voiceStateUpdate')
-  async onVoice(voiceState: VoiceState): Promise<void> {
-    const userId = voiceState.member.id;
-    const channelName = voiceState.channel.name;
-    const channelId = voiceState.channel.id;
+  async onVoice(oldState: VoiceState, newState: VoiceState): Promise<void> {
+    const member = newState.member;
+    if (!member.user.bot) {
+      const newChannelID = newState.channelId;
+      const oldChannelID = oldState.channelId;
+      // let online = this.memberService.online.has(member.id);
+      const isLeave = true;
+      const ignored = true;
 
-    this.logger.log(`update!! ${userId}  ${channelId} ${channelName}  `);
-    // TODO SAVE ON DDBB
+      //this.logger.log(`update!! ${userId}  ${channelId} ${channelName}  `);
+      // TODO SAVE ON DDBB
+    }
   }
 }

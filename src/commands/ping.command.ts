@@ -6,14 +6,14 @@ import { HttpService } from '@nestjs/axios';
 
 @Command({
   name: 'ping',
-  description: 'test ping',
+  description: 'test',
 })
 @Injectable()
 export class PingCommand {
   constructor(private readonly http: HttpService) {}
 
   @Handler()
-  async onPlaylist(): Promise<any> {
+  async test(): Promise<any> {
     // this.http
     //   .get('http://localhost:3000/prisma/addServer')
     //   .toPromise()
