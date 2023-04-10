@@ -56,18 +56,12 @@ model Channel{
   id                Int               @id @default(autoincrement())
   channelId         String            @unique 
   channelName       String            
-  channelType       channelType       @default(CHAT)
+  channelType       Int?      
   server            Server            @relation(fields: [serverId], references: [id])
   serverId          Int
   comments          Comment[] 
   commends          Command[] 
   userChannelTimes  UserChannelTime[]
-
-}
-
-enum channelType {
-  CHAT
-  VOICE
 }
 
 
@@ -76,8 +70,8 @@ model Comment{
   commentId         String            @unique  
   user              User              @relation(fields: [userId], references: [id])
   userId            Int  
-  channel           Channel           @relation(fields: [ChannelID], references: [id])
-  ChannelID         Int 
+  channel           Channel           @relation(fields: [channelId], references: [id])
+  channelId         Int 
   message           String
   releaseAt         DateTime          @default(now())
 }
@@ -88,8 +82,8 @@ model Command{
   commandId         String            @unique  
   user              User              @relation(fields: [userId], references: [id])
   userId            Int 
-  channel           Channel           @relation(fields: [ChannelID], references: [id])
-  ChannelID         Int 
+  channel           Channel           @relation(fields: [channelId], references: [id])
+  channelId         Int 
   description       String?
   releaseAt         DateTime          @default(now())
 }
@@ -110,6 +104,6 @@ model UserChannelTime{
   time              DateTime 
   user              User              @relation(fields: [userId], references: [id])
   userId            Int 
-  channel           Channel           @relation(fields: [ChannelID], references: [id])
-  ChannelID         Int 
+  channel           Channel           @relation(fields: [channelId], references: [id])
+  channelId         Int 
 }

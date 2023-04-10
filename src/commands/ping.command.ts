@@ -14,11 +14,10 @@ export class PingCommand {
 
   @Handler()
   async onPlaylist(): Promise<any> {
-    this.http
-      .get('http://localhost:3000/prisma/addServer')
-      .toPromise()
-      .then((res) => res.data);
-
+    // this.http
+    //   .get('http://localhost:3000/prisma/addServer')
+    //   .toPromise()
+    //   .then((res) => res.data);
     return 'test';
   }
 }

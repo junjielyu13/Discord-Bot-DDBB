@@ -24,6 +24,7 @@ dotenv.config();
             GatewayIntentBits.MessageContent,
             GatewayIntentBits.GuildMembers,
             GatewayIntentBits.GuildVoiceStates,
+            GatewayIntentBits.GuildIntegrations,
           ],
         },
       }),

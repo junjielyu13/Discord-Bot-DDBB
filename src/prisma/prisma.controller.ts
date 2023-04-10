@@ -29,10 +29,14 @@ export class PrismaController {
     });
   }
 
-  // @Get('getUser')
-  // async getUser(@Body() body): Promise<any> {
-
-  // }
+  @Get('getUser')
+  async getUser(@Query() query): Promise<any> {
+    return await this.prismaService.user.findUnique({
+      where: {
+        userId: query.userId,
+      },
+    });
+  }
 
   @Post('createServer')
   async createServer(@Body() body): Promise<any> {
@@ -64,4 +68,53 @@ export class PrismaController {
       },
     });
   }
+
+  @Post('createChannel')
+  async createChannel(@Body() body): Promise<any> {
+    return this.prismaService.channel.upsert({
+      where: {
+        channelId: body.channelId,
+      },
+      update: {},
+      create: {
+        serverId: body.serverId,
+        channelName: body.channelName,
+        channelId: body.channelId,
+        channelType: body.channelType,
+      },
+    });
+  }
+
+  @Get('getChannel')
+  async getChaneel(@Query() query): Promise<any> {
+    return await this.prismaService.channel.findUnique({
+      where: {
+        channelId: query.channelId,
+      },
+    });
+  }
+
+  @Post('createComment')
+  async createComment(@Body() body): Promise<any> {
+    return this.prismaService.comment.create({
+      data: {
+        commentId: body.commentId,
+        userId: body.userId,
+        channelId: body.channelId,
+        message: body.message,
+      },
+    });
+  }
+
+  // @Post('createCommand')
+  // async createCommand(@Body() body): Promise<any> {
+  //   return this.prismaService.command.create({
+  //     data: {
+  //       commandId: body.commandId,
+  //       userId: body.userId,
+  //       channelId: body.channelId,
+  //       description: body.description,
+  //     },
+  //   });
+  // }
 }
