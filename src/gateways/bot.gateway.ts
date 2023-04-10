@@ -9,6 +9,7 @@ import { HttpService } from '@nestjs/axios';
 @Injectable()
 export class BotGateway {
   private readonly logger = new Logger(BotGateway.name);
+
   constructor(
     @InjectDiscordClient()
     private readonly client: Client,
@@ -16,31 +17,28 @@ export class BotGateway {
   ) {}
 
   @Once('ready')
-  onReady() {
-    const Guilds = this.client.guilds.cache.map((guild) => {
-      const guildId = guild.id;
-      const guildName = guild.name;
+  async onReady() {
+    const Guilds = this.client.guilds.cache.map(async (guild) => {
+    
       this.http
         .post('http://localhost:3000/prisma/server', {
-          guildId: guildId,
-          guildName: guildName,
+          guildId: guild.id,
+          guildName: guild.name,
         })
         .toPromise()
         .then();
-    });
 
-    // this.client.guilds.cache
-    //   .get('867849049583255553')
-    //   .members.fetch({ withPresences: true })
-    //   .then((fetchedMembers) => {
-    //     const totalOnline = fetchedMembers.filter(
-    //       (member) => member.presence?.status != 'online',
-    //     );
-    //     // Now you have a collection with all online member objects in the totalOnline variable
-    //     this.logger.log(
-    //       `There are currently ${totalOnline.size} members online in this guild!`,
-    //     );
-    //   });
+      const members = guild.members.fetch();
+      (await members).forEach((member) => {
+        this.http
+          .post('http://localhost:3000/prisma/user', {
+            userId: member.id,
+            userName: member.user.username,
+          })
+          .toPromise()
+          .then();
+      });
+    });
   }
 
   @On('messageCreate')

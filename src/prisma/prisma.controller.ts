@@ -15,20 +15,22 @@ export class PrismaController {
   private readonly logger = new Logger(PrismaController.name);
   constructor(private readonly prismaService: PrismaService) {}
 
-  @Get('user')
-  async createDraft(): Promise<any> {
-    return this.prismaService.user.create({
-      data: {
-        userId: 'sdsdsdsd',
-        userName: '1000000',
+  @Post('user')
+  async createUser(@Body() body): Promise<any> {
+    return this.prismaService.user.upsert({
+      where: {
+        userId: body.userId,
+      },
+      update: {},
+      create: {
+        userId: body.userId,
+        userName: body.userName,
       },
     });
   }
 
   @Post('server')
   async createServer(@Body() body): Promise<any> {
-    this.logger.log(body);
-
     return this.prismaService.server.upsert({
       where: {
         ServerId: body.guildId,
