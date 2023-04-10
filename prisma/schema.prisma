@@ -29,10 +29,15 @@ model RegistreUser{
   server            Server            @relation(fields: [serverId], references: [id])
   serverId          Int
   userName          String
-  role              String
-  visibility        Boolean 
+  role              Role              @default(USER)
+  visibility        Boolean           @default(false)
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 
@@ -45,11 +50,12 @@ model Server{
   registreUsers     RegistreUser[]
 }
 
+
 model Channel{
   id                Int               @id @default(autoincrement())
   channelId         Int               @unique 
   channelName       String            
-  channelType       String
+  channelType       channelType       @default(CHAT)
   server            Server            @relation(fields: [serverId], references: [id])
   serverId          Int
   comments          Comment[] 
@@ -58,46 +64,51 @@ model Channel{
 
 }
 
+enum channelType {
+  CHAT
+  VOICE
+}
+
 
 model Comment{
-  id                Int           @id @default(autoincrement())
-  commentId         Int           @unique  
-  user              User          @relation(fields: [userId], references: [id])
+  id                Int               @id @default(autoincrement())
+  commentId         Int               @unique  
+  user              User              @relation(fields: [userId], references: [id])
   userId            Int  
-  channel           Channel       @relation(fields: [ChannelID], references: [id])
+  channel           Channel           @relation(fields: [ChannelID], references: [id])
   ChannelID         Int 
   message           String
-  releaseAt         DateTime      @default(now())
+  releaseAt         DateTime          @default(now())
 }
 
 
 model Command{
-  id                Int           @id @default(autoincrement())
-  commandId         Int           @unique  
-  user              User          @relation(fields: [userId], references: [id])
+  id                Int               @id @default(autoincrement())
+  commandId         Int               @unique  
+  user              User              @relation(fields: [userId], references: [id])
   userId            Int 
-  channel           Channel       @relation(fields: [ChannelID], references: [id])
+  channel           Channel           @relation(fields: [ChannelID], references: [id])
   ChannelID         Int 
-  description       String
-  releaseAt         DateTime      @default(now())
+  description       String?
+  releaseAt         DateTime          @default(now())
 }
 
 
 model Diary{
-  id                Int           @id @default(autoincrement())
-  diaryId           Int           @unique
-  server            Server        @relation(fields: [serverId], references: [id])
+  id                Int               @id @default(autoincrement())
+  diaryId           Int               @unique
+  server            Server            @relation(fields: [serverId], references: [id])
   serverId          Int
-  amount            Int
-  createdAt         DateTime      @default(now())
+  amount            Int?
+  createdAt         DateTime          @default(now())
 }
 
 
 model UserChannelTime{
-  id          Int          @id @default(autoincrement())
-  time        DateTime 
-  user        User         @relation(fields: [userId], references: [id])
-  userId      Int 
-  channel     Channel      @relation(fields: [ChannelID], references: [id])
-  ChannelID   Int 
+  id                Int               @id @default(autoincrement())
+  time              DateTime 
+  user              User              @relation(fields: [userId], references: [id])
+  userId            Int 
+  channel           Channel           @relation(fields: [ChannelID], references: [id])
+  ChannelID         Int 
 }

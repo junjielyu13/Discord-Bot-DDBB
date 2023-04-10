@@ -10,10 +10,8 @@ export class PrismaController {
   async createDraft(): Promise<any> {
     return this.prismaService.user.create({
       data: {
-        user_id: 1632,
-        user_name: '100000 00000000000000',
-        role: '1000000000000000000000',
-        status: '10000000000000000000',
+        userId: 16232332,
+        userName: '1000000',
       },
     });
   }
