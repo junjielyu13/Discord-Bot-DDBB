@@ -106,15 +106,14 @@ export class PrismaController {
     });
   }
 
-  // @Post('createCommand')
-  // async createCommand(@Body() body): Promise<any> {
-  //   return this.prismaService.command.create({
-  //     data: {
-  //       commandId: body.commandId,
-  //       userId: body.userId,
-  //       channelId: body.channelId,
-  //       description: body.description,
-  //     },
-  //   });
-  // }
+  @Post('createCommand')
+  async createCommand(@Body() body): Promise<any> {
+    return this.prismaService.command.create({
+      data: {
+        commandId: body.commandId,
+        userId: body.userId,
+        channelId: body.channelId,
+      },
+    });
+  }
 }
