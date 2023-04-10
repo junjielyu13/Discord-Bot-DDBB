@@ -15,7 +15,7 @@ export class PingCommand {
   @Handler()
   async onPlaylist(): Promise<any> {
     this.http
-      .get('http://localhost:3000/prisma/user')
+      .get('http://localhost:3000/prisma/server')
       .toPromise()
       .then((res) => res.data);
 

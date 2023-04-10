@@ -13,7 +13,7 @@ datasource db {
 
 model User {
   id                Int               @id @default(autoincrement())
-  userId            Int               @unique
+  userId            String            @unique
   userName          String
   comments          Comment[] 
   commends          Command[] 
@@ -43,7 +43,7 @@ enum Role {
 
 model Server{
   id                Int               @id @default(autoincrement())
-  ServerId          Int               @unique
+  ServerId          String            @unique
   ServerName        String
   channels          Channel[]
   diarys            Diary[]
@@ -53,7 +53,7 @@ model Server{
 
 model Channel{
   id                Int               @id @default(autoincrement())
-  channelId         Int               @unique 
+  channelId         String            @unique 
   channelName       String            
   channelType       channelType       @default(CHAT)
   server            Server            @relation(fields: [serverId], references: [id])
@@ -72,7 +72,7 @@ enum channelType {
 
 model Comment{
   id                Int               @id @default(autoincrement())
-  commentId         Int               @unique  
+  commentId         String            @unique  
   user              User              @relation(fields: [userId], references: [id])
   userId            Int  
   channel           Channel           @relation(fields: [ChannelID], references: [id])
@@ -84,7 +84,7 @@ model Comment{
 
 model Command{
   id                Int               @id @default(autoincrement())
-  commandId         Int               @unique  
+  commandId         String            @unique  
   user              User              @relation(fields: [userId], references: [id])
   userId            Int 
   channel           Channel           @relation(fields: [ChannelID], references: [id])
@@ -96,7 +96,7 @@ model Command{
 
 model Diary{
   id                Int               @id @default(autoincrement())
-  diaryId           Int               @unique
+  diaryId           String            @unique
   server            Server            @relation(fields: [serverId], references: [id])
   serverId          Int
   amount            Int?
