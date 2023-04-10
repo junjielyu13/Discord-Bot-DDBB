@@ -93,9 +93,6 @@ export class BotGateway {
           channelId = channel.data.id;
         });
 
-      this.logger.log(`user id ${userId}  `);
-      this.logger.log(`channel id ${channelId}  `);
-
       await this.http
         .post('http://localhost:3000/prisma/createComment', {
           commentId: message.id,
@@ -110,7 +107,37 @@ export class BotGateway {
 
   @On('interactionCreate')
   async onInteraction(action: Interaction): Promise<void> {
-    this.logger.log(`comnannnn!! `);
+    let userId = -1;
+    let channelId = -1;
+
+    if (action) {
+      const user = await this.http
+        .get('http://localhost:3000/prisma/getUser', {
+          params: { userId: action.user.id },
+        })
+        .toPromise()
+        .then((user) => {
+          userId = user.data.id;
+        });
+
+      const channel = await this.http
+        .get('http://localhost:3000/prisma/getChannel', {
+          params: { channelId: action.channel.id },
+        })
+        .toPromise()
+        .then((channel) => {
+          channelId = channel.data.id;
+        });
+
+      await this.http
+        .post('http://localhost:3000/prisma/createCommand', {
+          commandId: action.id,
+          userId: userId,
+          channelId: channelId,
+        })
+        .toPromise()
+        .then();
+    }
   }
 
   @On('voiceStateUpdate')
