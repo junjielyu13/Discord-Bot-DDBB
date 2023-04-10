@@ -1,6 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { On, Once, InjectDiscordClient } from '@discord-nestjs/core';
-import { Client, Message, VoiceChannel, VoiceState } from 'discord.js';
+import {
+  Client,
+  Message,
+  VoiceChannel,
+  VoiceState,
+  Interaction,
+} from 'discord.js';
 
 import { EmbedBuilder } from 'discord.js';
 
@@ -18,7 +24,7 @@ export class BotGateway {
 
   @Once('ready')
   async onReady() {
-    const Guilds = this.client.guilds.cache.map(async (guild) => {
+    this.client.guilds.cache.map(async (guild) => {
       let guildId = -1;
 
       this.http
@@ -39,8 +45,6 @@ export class BotGateway {
           })
           .toPromise()
           .then(async (res) => {
-            this.logger.log(res.data.id);
-
             this.http
               .post('http://localhost:3000/prisma/createRegistreUser', {
                 userId: res.data.id,
@@ -51,32 +55,62 @@ export class BotGateway {
           });
       });
 
-      (await guild.channels.fetch()).forEach((channel) => {});
+      (await guild.channels.fetch()).forEach((channel) => {
+        this.http
+          .post('http://localhost:3000/prisma/createChannel', {
+            serverId: guildId,
+            channelId: channel.id,
+            channelName: channel.name,
+            channelType: channel.type,
+          })
+          .toPromise()
+          .then();
+      });
     });
   }
 
   @On('messageCreate')
   async onMessage(message: Message): Promise<void> {
-    // const mentionedUser = message.mentions.users.first();
+    let userId = -1;
+    let channelId = -1;
 
     if (!message.author.bot) {
-      const userId = message.author.id;
-      const username = message.author.username;
-      const channelId = message.channelId;
-      // const channelName = message.channel.name;
-      const messageId = message.id;
-      const messageContent = message.content;
+      const user = await this.http
+        .get('http://localhost:3000/prisma/getUser', {
+          params: { userId: message.author.id },
+        })
+        .toPromise()
+        .then((user) => {
+          userId = user.data.id;
+        });
 
-      await message.reply(`
-      User id: ${userId}
-      User name: ${username} 
-      Channel Id: ${channelId} 
-      Message Id: ${messageId} 
-      Message Content: ${messageContent} 
-      `);
+      const channel = await this.http
+        .get('http://localhost:3000/prisma/getChannel', {
+          params: { channelId: message.channel.id },
+        })
+        .toPromise()
+        .then((channel) => {
+          channelId = channel.data.id;
+        });
+
+      this.logger.log(`user id ${userId}  `);
+      this.logger.log(`channel id ${channelId}  `);
+
+      await this.http
+        .post('http://localhost:3000/prisma/createComment', {
+          commentId: message.id,
+          userId: userId,
+          channelId: channelId,
+          message: message.content,
+        })
+        .toPromise()
+        .then();
     }
+  }
 
-    // TODO SAVE ON DDBB
+  @On('interactionCreate')
+  async onInteraction(action: Interaction): Promise<void> {
+    this.logger.log(`comnannnn!! `);
   }
 
   @On('voiceStateUpdate')
