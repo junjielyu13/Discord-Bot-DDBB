@@ -19,25 +19,39 @@ export class BotGateway {
   @Once('ready')
   async onReady() {
     const Guilds = this.client.guilds.cache.map(async (guild) => {
-    
+      let guildId = -1;
+
       this.http
-        .post('http://localhost:3000/prisma/server', {
+        .post('http://localhost:3000/prisma/createServer', {
           guildId: guild.id,
           guildName: guild.name,
         })
         .toPromise()
-        .then();
+        .then(async (res) => {
+          guildId = res.data.id;
+        });
 
-      const members = guild.members.fetch();
-      (await members).forEach((member) => {
+      (await guild.members.fetch()).forEach((member) => {
         this.http
-          .post('http://localhost:3000/prisma/user', {
+          .post('http://localhost:3000/prisma/createUser', {
             userId: member.id,
             userName: member.user.username,
           })
           .toPromise()
-          .then();
+          .then(async (res) => {
+            this.logger.log(res.data.id);
+
+            this.http
+              .post('http://localhost:3000/prisma/createRegistreUser', {
+                userId: res.data.id,
+                serverId: guildId,
+              })
+              .toPromise()
+              .then();
+          });
       });
+
+      (await guild.channels.fetch()).forEach((channel) => {});
     });
   }
 

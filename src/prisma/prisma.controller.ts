@@ -15,7 +15,7 @@ export class PrismaController {
   private readonly logger = new Logger(PrismaController.name);
   constructor(private readonly prismaService: PrismaService) {}
 
-  @Post('user')
+  @Post('createUser')
   async createUser(@Body() body): Promise<any> {
     return this.prismaService.user.upsert({
       where: {
@@ -29,7 +29,12 @@ export class PrismaController {
     });
   }
 
-  @Post('server')
+  // @Get('getUser')
+  // async getUser(@Body() body): Promise<any> {
+
+  // }
+
+  @Post('createServer')
   async createServer(@Body() body): Promise<any> {
     return this.prismaService.server.upsert({
       where: {
@@ -39,6 +44,23 @@ export class PrismaController {
       create: {
         ServerId: body.guildId,
         ServerName: body.guildName,
+      },
+    });
+  }
+
+  @Post('createRegistreUser')
+  async createRegistreUser(@Body() body): Promise<any> {
+    return this.prismaService.registreUser.upsert({
+      where: {
+        registreUserServerId: {
+          userId: body.userId,
+          serverId: body.serverId,
+        },
+      },
+      update: {},
+      create: {
+        userId: body.userId,
+        serverId: body.serverId,
       },
     });
   }
