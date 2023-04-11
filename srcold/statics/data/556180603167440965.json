@@ -1,0 +1,57 @@
+{
+	"lastSignIn": "2020-11-23T21:39:43.478Z",
+	"comboSignIn": 0,
+	"totalStudiedTime": 39380,
+	"todayStudiedTime": 0,
+	"yesterdayStudiedTime": 0,
+	"previousStartTime": null,
+	"studiedSection": [
+		{
+			"start": "2020-11-23T21:11:09.344Z",
+			"end": "2020-11-23T21:11:12.102Z",
+			"total": 2
+		},
+		{
+			"start": "2020-11-23T21:11:38.646Z",
+			"end": "2020-11-23T21:11:41.955Z",
+			"total": 3
+		},
+		{
+			"start": "2020-11-23T21:23:28.253Z",
+			"end": "2020-11-23T21:23:30.275Z",
+			"total": 2
+		},
+		{
+			"start": "2020-11-23T21:34:50.632Z",
+			"end": "2020-11-23T21:34:52.758Z",
+			"total": 2
+		}
+	],
+	"id": "556180603167440965",
+	"continueSignIn": 1,
+	"totalStudiedSection": [
+		[
+			{
+				"start": "2020-11-23T21:11:09.344Z",
+				"end": "2020-11-23T21:11:12.102Z",
+				"total": 2
+			},
+			{
+				"start": "2020-11-23T21:11:38.646Z",
+				"end": "2020-11-23T21:11:41.955Z",
+				"total": 3
+			},
+			{
+				"start": "2020-11-23T21:23:28.253Z",
+				"end": "2020-11-23T21:23:30.275Z",
+				"total": 2
+			},
+			{
+				"start": "2020-11-23T21:34:50.632Z",
+				"end": "2020-11-23T21:34:52.758Z",
+				"total": 2
+			}
+		]
+	],
+	"todayStudiedSection": []
+}

@@ -1,0 +1,33 @@
+{
+	"lastSignIn": null,
+	"comboSignIn": 0,
+	"totalStudiedTime": 50762,
+	"todayStudiedTime": 0,
+	"yesterdayStudiedTime": 0,
+	"previousStartTime": null,
+	"studiedSection": [],
+	"id": "759281897360326657",
+	"continueSignIn": 5,
+	"totalStudiedSection": [
+		[
+			{
+				"start": "2020-12-05T18:58:33.646Z",
+				"end": "2020-12-05T23:05:00.441Z",
+				"total": 14786
+			}
+		],
+		[
+			{
+				"start": "2020-12-05T23:05:00.466Z",
+				"end": "2020-12-05T23:26:46.683Z",
+				"total": 1306
+			},
+			{
+				"start": "2020-12-06T19:38:10.659Z",
+				"end": "2020-12-06T21:13:23.310Z",
+				"total": 5712
+			}
+		]
+	],
+	"todayStudiedSection": []
+}

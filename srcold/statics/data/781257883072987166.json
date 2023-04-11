@@ -1,0 +1,19 @@
+{
+	"lastSignIn": "2020-12-07T10:50:53.741Z",
+	"continueSignIn": 1,
+	"totalStudiedTime": 633,
+	"todayStudiedTime": 0,
+	"yesterdayStudiedTime": 0,
+	"previousStartTime": null,
+	"todayStudiedSection": [],
+	"totalStudiedSection": [
+		[
+			{
+				"start": "2020-11-25T20:54:00.090Z",
+				"end": "2020-11-25T21:04:33.717Z",
+				"total": 633
+			}
+		]
+	],
+	"id": "781257883072987166"
+}

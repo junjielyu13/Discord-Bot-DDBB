@@ -1,0 +1,55 @@
+{
+	"lastSignIn": "2020-11-22T09:07:01.359Z",
+	"comboSignIn": 0,
+	"totalStudiedTime": 190656,
+	"todayStudiedTime": 0,
+	"yesterdayStudiedTime": 9265,
+	"previousStartTime": null,
+	"studiedSection": [],
+	"id": "287322146844311563",
+	"continueSignIn": 5,
+	"totalStudiedSection": [
+		[
+			{
+				"total": 1,
+				"start": "2020-11-23T23:00:00.000Z",
+				"end": "2020-11-23T23:00:01.000Z"
+			},
+			{
+				"total": 3600,
+				"start": "2020-11-23T23:00:00.000Z",
+				"end": "2020-11-24T00:00:00.000Z"
+			},
+			{
+				"total": 82800,
+				"start": "2020-11-23T23:00:00.000Z",
+				"end": "2020-11-24T22:00:00.000Z"
+			},
+			{
+				"total": 0,
+				"start": "2020-11-23T23:00:00.000Z",
+				"end": "2020-11-23T23:00:00.000Z"
+			},
+			{
+				"total": 0,
+				"start": "2020-11-23T23:00:00.000Z",
+				"end": "2020-11-23T23:00:00.000Z"
+			}
+		],
+		[
+			{
+				"start": "2020-11-27T17:18:52.304Z",
+				"end": "2020-11-27T17:30:47.467Z",
+				"total": 715
+			}
+		],
+		[
+			{
+				"start": "2020-12-07T20:24:34.650Z",
+				"end": "2020-12-07T22:59:00.505Z",
+				"total": 9265
+			}
+		]
+	],
+	"todayStudiedSection": []
+}
