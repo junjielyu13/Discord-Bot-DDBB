@@ -1,0 +1,14 @@
+
+ping: test
+hello: EmbedBuilder
+
+commentsBy: (option userName) 
+commandsBy: (option userName)
+serverBy: (option name)
+
+diaryBy: (option date)
+channelTimeBy: (option user name)
+registerBy: (option role)
+
+userStatusBy: (option userName)
+setVisibility: (option visibility)

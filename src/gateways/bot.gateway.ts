@@ -158,7 +158,7 @@ export class BotGateway {
   }
 
   @Cron('0 0 0 * * *')
-  handleCron() {
+  async handleCron() {
     this.logger.log('Called when the current second is 45');
   }
 }
