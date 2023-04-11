@@ -10,6 +10,8 @@ import {
 
 import { EmbedBuilder } from 'discord.js';
 
+import { Cron } from '@nestjs/schedule';
+
 import { HttpService } from '@nestjs/axios';
 
 @Injectable()
@@ -153,5 +155,10 @@ export class BotGateway {
       //this.logger.log(`update!! ${userId}  ${channelId} ${channelName}  `);
       // TODO SAVE ON DDBB
     }
+  }
+
+  @Cron('0 0 0 * * *')
+  handleCron() {
+    this.logger.log('Called when the current second is 45');
   }
 }
