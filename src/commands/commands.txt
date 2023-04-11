@@ -1,6 +1,7 @@
 
 ping: test
 hello: EmbedBuilder
+help: EmbedBuilder
 
 commentsBy: (option userName) 
 commandsBy: (option userName)
