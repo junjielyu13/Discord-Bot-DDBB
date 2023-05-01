@@ -140,6 +140,41 @@ export class PrismaController {
     });
   }
 
+  @Get('DeleteTimeChannelByUserId')
+  async DeleteTimeChannelByUserId(@Query() query): Promise<any> {
+    const temps = await this.prismaService.temps.findMany({
+      where: {
+        userId: query.userId,
+      },
+      // orderBy: {
+      //   createdAt: 'desc', // Sort by creation date in descending order
+      // },
+    });
+
+    const lastTemp = temps[0]; // Get the last created temp
+    const tempIdsToDelete = temps.slice(1).map((temp) => temp.id); // Get the IDs of all temps except the last one
+
+    await this.prismaService.temps.deleteMany({
+      where: {
+        userId: query.userId,
+        id: {
+          notIn: tempIdsToDelete, // Exclude all temps except the last one
+        },
+      },
+    });
+
+    return lastTemp; // Return the last temp object
+  }
+
+  @Get('DeleteAllTimeChannelByUserId')
+  async DeleteAllTimeChannelByUserId(@Query() query): Promise<any> {
+    return this.prismaService.temps.deleteMany({
+      where: {
+        userId: query.userId,
+      },
+    });
+  }
+
   @Post('writeUserChannelTime')
   async writeUserChannelTime(@Body() body): Promise<any> {
     return this.prismaService.userChannelTime.create({
