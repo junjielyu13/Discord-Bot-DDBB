@@ -79,7 +79,7 @@ model Comment{
 
 model Command{
   id                Int               @id @default(autoincrement())
-  commandId         String            @unique  
+  commandId         String              
   user              User              @relation(fields: [userId], references: [id])
   userId            Int 
   channel           Channel           @relation(fields: [channelId], references: [id])
