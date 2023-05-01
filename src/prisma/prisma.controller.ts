@@ -116,4 +116,38 @@ export class PrismaController {
       },
     });
   }
+
+  @Post('joinTempOnChannel')
+  async joinTempOnChannel(@Body() body): Promise<any> {
+    return this.prismaService.temps.create({
+      data: {
+        userId: body.userId,
+        channelId: body.channelId,
+        statu: body.statu,
+      },
+    });
+  }
+
+  @Get('GetTimeChannelByUserId')
+  async GetTimeChannelByUserId(@Query() query): Promise<any> {
+    return this.prismaService.temps.findMany({
+      where: {
+        userId: query.userId,
+      },
+      select: {
+        createdAt: true,
+      },
+    });
+  }
+
+  @Post('writeUserChannelTime')
+  async writeUserChannelTime(@Body() body): Promise<any> {
+    return this.prismaService.userChannelTime.create({
+      data: {
+        userId: body.userId,
+        channelId: body.channelId,
+        time: body.time,
+      },
+    });
+  }
 }

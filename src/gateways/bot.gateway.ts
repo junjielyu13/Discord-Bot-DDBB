@@ -148,12 +148,74 @@ export class BotGateway {
     if (!member.user.bot) {
       const newChannelID = newState.channelId;
       const oldChannelID = oldState.channelId;
-      // let online = this.memberService.online.has(member.id);
-      const isLeave = true;
-      const ignored = true;
 
-      //this.logger.log(`update!! ${userId}  ${channelId} ${channelName}  `);
-      // TODO SAVE ON DDBB
+      if (newChannelID && !oldChannelID) {
+        await this.http
+          .post('http://localhost:3000/prisma/joinTempOnChannel', {
+            userId: member.id,
+            channelId: newChannelID,
+            statu: false,
+          })
+          .toPromise()
+          .then();
+      } else if (!newChannelID && oldChannelID) {
+        this.logger.log('left!!!!');
+      } else {
+        this.logger.log(`update!! ${newChannelID}  ${oldChannelID} `);
+
+        await this.http
+          .post('http://localhost:3000/prisma/joinTempOnChannel', {
+            userId: member.id,
+            channelId: newChannelID,
+            statu: false,
+          })
+          .toPromise()
+          .then(async () => {
+            await this.http
+              .get('http://localhost:3000/prisma/GetTimeChannelByUserId', {
+                params: { userId: member.id },
+              })
+              .toPromise()
+              .then(async (res) => {
+                let totalSeconds = 0;
+                for (let i = 0; i < res.data.length - 1; i++) {
+                  const startTime = new Date(res.data[i].createdAt).getTime();
+                  const endTime = new Date(res.data[i + 1].createdAt).getTime();
+                  totalSeconds += (endTime - startTime) / 1000;
+                }
+                this.logger.log(`${totalSeconds}`);
+
+                let userId = -1;
+                let channelId = -1;
+                await this.http
+                  .get('http://localhost:3000/prisma/getUser', {
+                    params: { userId: member.id },
+                  })
+                  .toPromise()
+                  .then((user) => {
+                    userId = user.data.id;
+                  });
+
+                await this.http
+                  .get('http://localhost:3000/prisma/getChannel', {
+                    params: { channelId: newChannelID },
+                  })
+                  .toPromise()
+                  .then((channel) => {
+                    channelId = channel.data.id;
+                  });
+
+                await this.http
+                  .post('http://localhost:3000/prisma/writeUserChannelTime', {
+                    userId: userId,
+                    channelId: channelId,
+                    time: String(totalSeconds),
+                  })
+                  .toPromise()
+                  .then();
+              });
+          });
+      }
     }
   }
 
