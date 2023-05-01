@@ -5,7 +5,7 @@ import { AppService } from '../service/app.service';
 import { DiscordModule } from '@discord-nestjs/core';
 import { GatewayIntentBits } from 'discord.js';
 import { BotModule } from './bot.module';
-import { PingModule } from './ping.module';
+import { CommandModule } from './command.module';
 import { PrismaModule } from '../prisma/prisma.module';
 import { DBModule } from '../db/db.module';
 
@@ -30,7 +30,7 @@ dotenv.config();
       }),
     }),
     BotModule,
-    PingModule,
+    CommandModule,
     PrismaModule,
     DBModule,
   ],

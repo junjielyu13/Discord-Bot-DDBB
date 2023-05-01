@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { DiscordModule } from '@discord-nestjs/core';
 import { PingCommand } from '../commands/ping.command';
-import { DBModule } from '../db/db.module';
-import { DBService } from '../db/db.service';
-import { DBController } from '../db/db.controller';
+import { HelloCommand } from '../commands/hello.command';
+import { HelpCommand } from '../commands/help.command';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
@@ -14,6 +13,6 @@ import { HttpModule } from '@nestjs/axios';
       maxRedirects: 5,
     }),
   ],
-  providers: [PingCommand],
+  providers: [PingCommand, HelloCommand, HelpCommand],
 })
-export class PingModule {}
+export class CommandModule {}
