@@ -194,7 +194,7 @@ export class BotGateway {
 
                 await this.http
                   .get('http://localhost:3000/prisma/getChannel', {
-                    params: { channelId: newChannelID },
+                    params: { channelId: oldChannelID },
                   })
                   .toPromise()
                   .then((channel) => {
