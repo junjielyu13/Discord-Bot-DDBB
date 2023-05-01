@@ -133,7 +133,7 @@ export class BotGateway {
 
       await this.http
         .post('http://localhost:3000/prisma/createCommand', {
-          commandId: action.toString(),
+          commandId: String(action.toString()),
           userId: userId,
           channelId: channelId,
         })

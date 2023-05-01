@@ -67,7 +67,7 @@ model Channel{
 
 model Comment{
   id                Int               @id @default(autoincrement())
-  commentId         String            @unique  
+  commentId         String              
   user              User              @relation(fields: [userId], references: [id])
   userId            Int  
   channel           Channel           @relation(fields: [channelId], references: [id])

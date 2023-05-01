@@ -16,6 +16,33 @@ export class HelloCommand {
 
   @Handler()
   async hello(interaction: CommandInteraction): Promise<any> {
-    return `hello`;
+    const exampleEmbed = new EmbedBuilder()
+      .setColor(0x0099ff)
+      .setTitle('Itaca')
+      .setURL('https://github.com/junjielyu13/Discord-Bot-DDBB')
+      .setAuthor({
+        name: 'Your discord Bot',
+        url: 'https://github.com/junjielyu13/Discord-Bot-DDBB',
+      })
+      .setDescription('Some description here')
+      .setThumbnail('https://i.imgur.com/AfFp7pu.p')
+      .addFields(
+        { name: 'Regular field title', value: 'Some value here' },
+        { name: '\u200B', value: '\u200B' },
+        { name: 'Inline field title', value: 'Some value here', inline: true },
+        { name: 'Inline field title', value: 'Some value here', inline: true },
+      )
+      .addFields({
+        name: 'Inline field title',
+        value: 'Some value here',
+        inline: true,
+      })
+      .setImage('https://i.imgur.com/AfFp7pu.png')
+      .setTimestamp()
+      .setFooter({
+        text: 'Some footer text here',
+      });
+
+    interaction.reply({ embeds: [exampleEmbed] });
   }
 }

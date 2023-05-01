@@ -16,6 +16,26 @@ export class HelpCommand {
 
   @Handler()
   async help(interaction: CommandInteraction): Promise<any> {
-    return `help`;
+    const exampleEmbed = new EmbedBuilder()
+      .setColor(0x0099ff)
+      .setTitle('Help')
+      .setURL('https://github.com/junjielyu13/Discord-Bot-DDBB')
+      .setAuthor({
+        name: 'Itaca',
+        url: 'https://github.com/junjielyu13/Discord-Bot-DDBB',
+      })
+      .setDescription('Some description here')
+      .setThumbnail('https://i.imgur.com/AfFp7pu.p')
+      .addFields({ name: '/help', value: 'Some value here' })
+      .addFields({ name: '/ping', value: 'Some value here' })
+      .addFields({ name: '/hello', value: 'Some value here' })
+      .addFields({ name: 'Regular field title', value: 'Some value here' })
+      .addFields({ name: 'Regular field title', value: 'Some value here' })
+      .addFields({ name: 'Regular field title', value: 'Some value here' })
+      .addFields({ name: 'Regular field title', value: 'Some value here' })
+      .addFields({ name: 'Regular field title', value: 'Some value here' })
+      .setTimestamp();
+
+    interaction.reply({ embeds: [exampleEmbed] });
   }
 }
