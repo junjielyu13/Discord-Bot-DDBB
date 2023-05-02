@@ -14,7 +14,7 @@ import { Cron } from '@nestjs/schedule';
 
 import { HttpService } from '@nestjs/axios';
 
-import { DBService } from '../db/db.service';
+import { DBController } from '../db/db.controller';
 
 @Injectable()
 export class BotGateway {
@@ -24,7 +24,7 @@ export class BotGateway {
     @InjectDiscordClient()
     private readonly client: Client,
     private readonly http: HttpService,
-    private readonly dbServer: DBService,
+    private readonly dbController: DBController,
   ) {}
 
   @Once('ready')
@@ -41,6 +41,11 @@ export class BotGateway {
         .then(async (res) => {
           guildId = res.data.id;
         });
+
+      // this.dbController.createUser({
+      //   userId: 'testeSsdsdsdDSstest',
+      //   userName: 'testname',
+      // });
 
       (await guild.members.fetch()).forEach((member) => {
         this.http
@@ -108,11 +113,6 @@ export class BotGateway {
         .toPromise()
         .then();
     }
-
-    this.dbServer.createUser({
-      userId: 'testestest',
-      userName: 'testname',
-    });
   }
 
   @On('interactionCreate')
