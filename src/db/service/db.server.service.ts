@@ -6,9 +6,20 @@ import { Prisma, Server } from '@prisma/client';
 export class DBServerService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async createServer(data: Prisma.ServerCreateInput): Promise<Server> {
-    return this.prismaService.server.create({
-      data,
+  async upsertServer(params: {
+    where: Prisma.ServerWhereUniqueInput;
+    data: Prisma.ServerCreateInput;
+  }): Promise<Server> {
+    const { where, data } = params;
+    return this.prismaService.server.upsert({
+      where: {
+        ServerId: where.ServerId,
+      },
+      update: {},
+      create: {
+        ServerId: data.ServerId,
+        ServerName: data.ServerName,
+      },
     });
   }
 }

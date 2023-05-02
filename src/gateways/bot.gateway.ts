@@ -314,3 +314,62 @@ export class BotGateway {
     this.logger.log(`${date}`);
   }
 }
+
+// dbcontroller version
+// @Once('ready')
+// async onReady() {
+//   this.client.guilds.cache.map(async (guild) => {
+//     this.dbController
+//       .upsertServer({
+//         where: { ServerId: guild.id },
+//         data: { ServerId: guild.id, ServerName: guild.name },
+//       })
+//       .then(async (server) => {
+//         (await guild.members.fetch()).forEach((member) => {
+//           this.dbController
+//             .upsertUser({
+//               where: { userId: member.id },
+//               data: { userId: member.id, userName: member.user.username },
+//             })
+//             .then(async (user) => {
+//               this.dbController.upsertRegistreUser({
+//                 where: {
+//                   registreUserServerId: {
+//                     userId: user.id,
+//                     serverId: server.id,
+//                   },
+//                 },
+//                 data: {
+//                   userId: user.id,
+//                   serverId: server.id,
+//                 },
+//               });
+//             });
+//         });
+
+//         (await guild.channels.fetch()).forEach((channel) => {
+//           this.dbController.upsertChannel({
+//             where: {
+//               channelId: channel.id,
+//             },
+//             data: {
+//               server: server,
+//               channelId: channel.id,
+//               channelName: channel.name,
+//               channelType: channel.type,
+//             },
+//           });
+
+//           // this.http
+//           //   .post('http://localhost:3000/prisma/createChannel', {
+//           //     serverId: server.id,
+//           //     channelId: channel.id,
+//           //     channelName: channel.name,
+//           //     channelType: channel.type,
+//           //   })
+//           //   .toPromise()
+//           //   .then();
+//         });
+//       });
+//   });
+// }

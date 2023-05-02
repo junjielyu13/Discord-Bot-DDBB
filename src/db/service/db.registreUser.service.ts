@@ -3,14 +3,23 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { Prisma, RegistreUser } from '@prisma/client';
 
 @Injectable()
-export class DBRegistreUser {
+export class DBRegistreUserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async createRegistreUser(
-    data: Prisma.RegistreUserCreateInput,
-  ): Promise<RegistreUser> {
-    return this.prismaService.registreUser.create({
-      data,
+  async upsertRegistreUser(params: {
+    where: Prisma.RegistreUserWhereUniqueInput;
+    data: Prisma.RegistreUserCreateInput;
+  }): Promise<RegistreUser> {
+    const { where, data } = params;
+    return this.prismaService.registreUser.upsert({
+      where: {
+        registreUserServerId: where.registreUserServerId,
+      },
+      update: {},
+      create: {
+        userId: where.registreUserServerId.userId,
+        serverId: where.registreUserServerId.serverId,
+      },
     });
   }
 }

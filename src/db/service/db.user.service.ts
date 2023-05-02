@@ -6,9 +6,20 @@ import { Prisma, User } from '@prisma/client';
 export class DBUserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prismaService.user.create({
-      data,
+  async upsertUser(params: {
+    where: Prisma.UserWhereUniqueInput;
+    data: Prisma.UserCreateInput;
+  }): Promise<User> {
+    const { where, data } = params;
+    return this.prismaService.user.upsert({
+      where: {
+        userId: where.userId,
+      },
+      update: {},
+      create: {
+        userId: data.userId,
+        userName: data.userName,
+      },
     });
   }
 }
