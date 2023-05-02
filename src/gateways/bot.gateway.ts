@@ -14,6 +14,8 @@ import { Cron } from '@nestjs/schedule';
 
 import { HttpService } from '@nestjs/axios';
 
+import { DBService } from '../db/db.service';
+
 @Injectable()
 export class BotGateway {
   private readonly logger = new Logger(BotGateway.name);
@@ -22,6 +24,7 @@ export class BotGateway {
     @InjectDiscordClient()
     private readonly client: Client,
     private readonly http: HttpService,
+    private readonly dbServer: DBService,
   ) {}
 
   @Once('ready')
@@ -105,6 +108,11 @@ export class BotGateway {
         .toPromise()
         .then();
     }
+
+    this.dbServer.createUser({
+      userId: 'testestest',
+      userName: 'testname',
+    });
   }
 
   @On('interactionCreate')
@@ -292,8 +300,17 @@ export class BotGateway {
     }
   }
 
-  @Cron('0 0 0 * * *')
+  // @Cron('0 0 10 * * *')
+  // async handleCron() {
+  //   this.logger.log('Called when the current second is 45');
+  // }
+
+  @Cron('10 * * * * *')
   async handleCron() {
-    this.logger.log('Called when the current second is 45');
+    this.logger.log('Called when the current second is 10');
+
+    const date = new Date().toJSON().slice(0, 19).replace('T', ':');
+
+    this.logger.log(`${date}`);
   }
 }

@@ -5,8 +5,7 @@ import { DBService } from './db.service';
 export class DBController {
   constructor(private readonly dbService: DBService) {}
 
-  @Get('adduser')
-  async createDraft(): Promise<any> {
-    return this.dbService.addUser();
+  async createUser(data): Promise<any> {
+    return this.dbService.createUser(data);
   }
 }

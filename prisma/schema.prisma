@@ -91,7 +91,6 @@ model Command{
 
 model Diary{
   id                Int               @id @default(autoincrement())
-  diaryId           String            @unique
   server            Server            @relation(fields: [serverId], references: [id])
   serverId          Int
   amount            Int?
