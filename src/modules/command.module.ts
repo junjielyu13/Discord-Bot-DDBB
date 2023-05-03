@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { DiscordModule } from '@discord-nestjs/core';
 import { PingCommand } from '../commands/ping.command';
 import { HelloCommand } from '../commands/hello.command';
 import { HelpCommand } from '../commands/help.command';
-import { HttpModule } from '@nestjs/axios';
+import { CommentByCommand } from '../commands/commentsby.command';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { HttpModule } from '@nestjs/axios';
       maxRedirects: 5,
     }),
   ],
-  providers: [PingCommand, HelloCommand, HelpCommand],
+  providers: [PingCommand, HelloCommand, HelpCommand, CommentByCommand],
 })
 export class CommandModule {}
