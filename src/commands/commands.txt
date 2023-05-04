@@ -3,13 +3,18 @@ ping: test
 hello: EmbedBuilder
 help: EmbedBuilder
 
-commentsBy: (option userName) 
-commandsBy: (option userName)
-serverBy: (option name)
-
+commentsBy: (option: userName, default: all) 
+commandsBy: (option: userName, default: all)
+channelTimeBy: (option username)
 diaryBy: (option date)
-channelTimeBy: (option user name)
-registerBy: (option role)
 
+staticComments: (option: userName, default: all)  --- count 
+staticDiaryComments: (option: userName, default: all) --- count diary
+staticCommands: (option: userName, default: all)   --- count
+staticDiaryCommands: (option: userName, default: all) --- count diary
+staticChannelsTemps: (option: userName, default: all) --- count
+staticDiaryTemps: (option: userName, default: all) --- count
+
+
+setVisibility: (option visibility(true/false))
 userStatusBy: (option userName)
-setVisibility: (option visibility)

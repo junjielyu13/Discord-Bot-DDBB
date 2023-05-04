@@ -1,11 +1,5 @@
 import { SlashCommandPipe } from '@discord-nestjs/common';
-import {
-  Command,
-  EventParams,
-  Handler,
-  IA,
-  InteractionEvent,
-} from '@discord-nestjs/core';
+import { Command, EventParams, Handler, IA } from '@discord-nestjs/core';
 import { Injectable } from '@nestjs/common';
 import { ClientEvents } from 'discord.js';
 
