@@ -321,4 +321,71 @@ export class PrismaController {
       },
     });
   }
+
+  @Get('getAllUserChannelTime')
+  async getAllUserChannelTime(@Query() query): Promise<any> {
+    return this.prismaService.userChannelTime.findMany({
+      where: {
+        channel: {
+          server: {
+            ServerId: query.serverId,
+          },
+        },
+      },
+      select: {
+        time: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+        channel: {
+          select: {
+            channelName: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          createdAt: 'desc',
+        },
+      ],
+      take: 25,
+    });
+  }
+
+  @Get('getUserChannelTimeByUsername')
+  async getUserChannelTimeByUsername(@Query() query): Promise<any> {
+    return this.prismaService.userChannelTime.findMany({
+      where: {
+        user: {
+          userName: query.userName,
+        },
+        channel: {
+          server: {
+            ServerId: query.serverId,
+          },
+        },
+      },
+      select: {
+        time: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+        channel: {
+          select: {
+            channelName: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          createdAt: 'desc',
+        },
+      ],
+      take: 25,
+    });
+  }
 }
