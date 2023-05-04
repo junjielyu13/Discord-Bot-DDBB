@@ -3,29 +3,42 @@ import {
   Command,
   EventParams,
   Handler,
+  IA,
   InteractionEvent,
 } from '@discord-nestjs/core';
+import { Injectable } from '@nestjs/common';
 import { ClientEvents } from 'discord.js';
 
-import { ByDto } from './dto/by.dto';
-import { Logger } from '@nestjs/common';
+// import { PlayDto } from './dto/by.dto';
 
+import { Param, ParamType } from '@discord-nestjs/core';
+
+export class PlayDto {
+  @Param({
+    name: 'song',
+    description:
+      'Name or URL of song/playlist. Could be from (Youtube, Spotify, SoundCloud)',
+    type: ParamType.STRING,
+    // required: true,
+    // autocomplete: true,
+  })
+  song: string;
+}
+
+@Injectable()
 @Command({
   name: 'play',
   description: 'Plays a song',
 })
-export class CommentByCommand {
-  private readonly logger = new Logger(CommentByCommand.name);
-
+export class PlayCommand {
   @Handler()
   onPlayCommand(
-    @InteractionEvent(SlashCommandPipe) options: ByDto,
+    @IA(SlashCommandPipe) dto: PlayDto,
     @EventParams() args: ClientEvents['interactionCreate'],
   ): string {
-    this.logger.log(options);
-    this.logger.log(options.username);
-    this.logger.log(args);
+    console.log('DTO', dto);
+    console.log('Event args', args);
 
-    return `username: ${options.username}`;
+    return `Start playing ${dto.song}.`;
   }
 }

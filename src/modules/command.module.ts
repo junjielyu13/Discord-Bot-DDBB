@@ -4,7 +4,7 @@ import { DiscordModule } from '@discord-nestjs/core';
 import { PingCommand } from '../commands/ping.command';
 import { HelloCommand } from '../commands/hello.command';
 import { HelpCommand } from '../commands/help.command';
-import { CommentByCommand } from '../commands/commentsby.command';
+import { PlayCommand } from '../commands/commentsby.command';
 
 @Module({
   imports: [
@@ -14,6 +14,6 @@ import { CommentByCommand } from '../commands/commentsby.command';
       maxRedirects: 5,
     }),
   ],
-  providers: [PingCommand, HelloCommand, HelpCommand, CommentByCommand],
+  providers: [PingCommand, HelloCommand, HelpCommand],
 })
 export class CommandModule {}
