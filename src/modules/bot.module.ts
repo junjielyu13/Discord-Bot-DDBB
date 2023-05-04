@@ -8,18 +8,26 @@ import { PingCommand } from '../commands/ping.command';
 import { HelloCommand } from '../commands/hello.command';
 import { HelpCommand } from '../commands/help.command';
 import { CommentsBy } from '../commands/commentsby.command';
+import { CommandsBy } from '../commands/commandsby.command';
 
 @Module({
   imports: [
     DiscordModule.forFeature(),
     ScheduleModule.forRoot(),
     HttpModule.register({
-      timeout: 5000,
+      timeout: 10000,
       maxRedirects: 5,
     }),
     DBModule,
   ],
-  providers: [BotGateway, PingCommand, HelloCommand, HelpCommand, CommentsBy],
+  providers: [
+    BotGateway,
+    PingCommand,
+    HelloCommand,
+    HelpCommand,
+    CommentsBy,
+    CommandsBy,
+  ],
   exports: [],
 })
 export class BotModule {}

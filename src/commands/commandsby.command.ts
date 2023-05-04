@@ -14,15 +14,15 @@ import { HttpService } from '@nestjs/axios';
 import { byDto } from './dto/by.dto';
 
 @Command({
-  name: 'commentsby',
+  name: 'commandsby',
   description: 'get comments by username',
 })
 @Injectable()
-export class CommentsBy {
+export class CommandsBy {
   constructor(private readonly http: HttpService) {}
 
   @Handler()
-  async onCommentsBy(
+  async onCommandsBy(
     @IA(SlashCommandPipe) dto: byDto,
     @EventParams() args: ClientEvents['interactionCreate'],
   ): Promise<any> {
@@ -34,7 +34,7 @@ export class CommentsBy {
 
     if (dto.username == 'all' || dto.username === undefined) {
       await this.http
-        .get('http://localhost:3000/prisma/getAllComment', {
+        .get('http://localhost:3000/prisma/getAllCommand', {
           params: { serverId: args['guildId'] },
         })
         .toPromise()
@@ -47,7 +47,7 @@ export class CommentsBy {
               ' | ' +
               element.channel.channelName +
               ' | ' +
-              element.message +
+              element.commandId +
               '\n';
           });
         });
@@ -55,7 +55,7 @@ export class CommentsBy {
       return `${resultat}`;
     } else {
       await this.http
-        .get('http://localhost:3000/prisma/getCommentBy', {
+        .get('http://localhost:3000/prisma/getCommandBy', {
           params: {
             userName: dto.username,
             serverId: args['guildId'],
@@ -71,7 +71,7 @@ export class CommentsBy {
               ' | ' +
               element.channel.channelName +
               ' | ' +
-              element.message +
+              element.commandId +
               '\n';
           });
         });

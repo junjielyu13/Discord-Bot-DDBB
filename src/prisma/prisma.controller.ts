@@ -184,6 +184,75 @@ export class PrismaController {
     });
   }
 
+  @Get('getAllCommand')
+  async getAllCommand(@Query() query): Promise<any> {
+    return this.prismaService.command.findMany({
+      where: {
+        channel: {
+          server: {
+            ServerId: query.serverId,
+          },
+        },
+      },
+      select: {
+        commandId: true,
+        releaseAt: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+        channel: {
+          select: {
+            channelName: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          releaseAt: 'desc',
+        },
+      ],
+      take: 25,
+    });
+  }
+
+  @Get('getCommandBy')
+  async getCommandBy(@Query() query): Promise<any> {
+    return this.prismaService.command.findMany({
+      where: {
+        user: {
+          userName: query.userName,
+        },
+        channel: {
+          server: {
+            ServerId: query.serverId,
+          },
+        },
+      },
+      select: {
+        commandId: true,
+        releaseAt: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+        channel: {
+          select: {
+            channelName: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          releaseAt: 'desc',
+        },
+      ],
+      take: 25,
+    });
+  }
+
   @Post('joinTempOnChannel')
   async joinTempOnChannel(@Body() body): Promise<any> {
     return this.prismaService.temps.create({
