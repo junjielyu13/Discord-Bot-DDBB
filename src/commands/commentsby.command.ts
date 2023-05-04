@@ -54,7 +54,29 @@ export class CommentsBy {
 
       return `${resultat}`;
     } else {
-      return `Start playing ${dto.username}.`;
+      await this.http
+        .get('http://localhost:3000/prisma/getCommentBy', {
+          params: {
+            userName: dto.username,
+            serverId: args['guildId'],
+          },
+        })
+        .toPromise()
+        .then((res) => {
+          res.data.forEach((element) => {
+            resultat +=
+              element.releaseAt +
+              ' | ' +
+              element.user.userName +
+              ' | ' +
+              element.channel.channelName +
+              ' | ' +
+              element.message +
+              '\n';
+          });
+        });
+
+      return `${resultat}`;
     }
   }
 }
