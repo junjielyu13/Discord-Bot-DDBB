@@ -37,7 +37,6 @@ dotenv.config();
             removeCommandsBefore: true,
           },
         ],
-        failOnLogin: true,
       }),
       inject: [ConfigService],
     }),

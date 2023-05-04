@@ -1,13 +1,12 @@
-import { Param } from '@discord-nestjs/core';
-import { Transform } from 'class-transformer';
+import { Param, ParamType } from '@discord-nestjs/core';
 
-export class PlayDto {
-  // @Transform(({ value }) => value.toUpperCase())
+export class byDto {
   @Param({
-    name: 'song',
-    description:
-      'Name or URL of song/playlist. Could be from (Youtube, Spotify, SoundCloud)',
+    name: 'username',
+    description: 'get comments by username',
+    type: ParamType.STRING,
     // required: true,
+    // autocomplete: true,
   })
-  song: string;
+  username: string;
 }
