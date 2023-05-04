@@ -106,6 +106,38 @@ export class PrismaController {
     });
   }
 
+  @Get('getAllComment')
+  async getAllComment(@Query() query): Promise<any> {
+    return this.prismaService.comment.findMany({
+      where: {
+        channel: {
+          server: {
+            ServerId: query.serverId,
+          },
+        },
+      },
+      select: {
+        message: true,
+        releaseAt: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+        channel: {
+          select: {
+            channelName: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          releaseAt: 'desc',
+        },
+      ],
+    });
+  }
+
   @Post('createCommand')
   async createCommand(@Body() body): Promise<any> {
     return this.prismaService.command.create({
