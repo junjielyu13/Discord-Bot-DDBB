@@ -334,6 +334,7 @@ export class PrismaController {
       },
       select: {
         time: true,
+        createdAt: true,
         user: {
           select: {
             userName: true,
@@ -369,11 +370,7 @@ export class PrismaController {
       },
       select: {
         time: true,
-        user: {
-          select: {
-            userName: true,
-          },
-        },
+        createdAt: true,
         channel: {
           select: {
             channelName: true,

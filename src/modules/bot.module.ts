@@ -9,6 +9,7 @@ import { HelloCommand } from '../commands/hello.command';
 import { HelpCommand } from '../commands/help.command';
 import { CommentsBy } from '../commands/commentsby.command';
 import { CommandsBy } from '../commands/commandsby.command';
+import { ChannelTimeBy } from '../commands/channeltimeby.command';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CommandsBy } from '../commands/commandsby.command';
     HelpCommand,
     CommentsBy,
     CommandsBy,
+    ChannelTimeBy,
   ],
   exports: [],
 })

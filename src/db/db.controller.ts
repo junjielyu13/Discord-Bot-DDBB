@@ -39,4 +39,8 @@ export class DBController {
   async upsertChannel(data): Promise<Channel> {
     return this.dbChannelService.upsertChannel(data);
   }
+
+  async getUserChannelTimeByUsername(data): Promise<any> {
+    return this.dbUserChannelTime.getUserChannelTimeByUsername(data);
+  }
 }

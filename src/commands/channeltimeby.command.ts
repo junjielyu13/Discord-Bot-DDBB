@@ -9,11 +9,11 @@ import { byDto } from './dto/by.dto';
 import { DBController } from '../db/db.controller';
 
 @Command({
-  name: 'commandsby',
+  name: 'channeltimeby',
   description: 'get comments by username',
 })
 @Injectable()
-export class CommandsBy {
+export class ChannelTimeBy {
   constructor(
     private readonly http: HttpService,
     private readonly dbController: DBController,
@@ -32,48 +32,45 @@ export class CommandsBy {
 
     if (dto.username == 'all' || dto.username === undefined) {
       await this.http
-        .get('http://localhost:3000/prisma/getAllCommand', {
+        .get('http://localhost:3000/prisma/getAllUserChannelTime', {
           params: { serverId: args['guildId'] },
         })
         .toPromise()
         .then((res) => {
           res.data.forEach((element) => {
             resultat +=
-              element.releaseAt +
+              element.createdAt +
               ' | ' +
               element.user.userName +
               ' | ' +
               element.channel.channelName +
               ' | ' +
-              element.commandId +
-              '\n';
+              element.time +
+              's\n';
           });
         });
-
       return `${resultat}`;
     } else {
-      await this.http
-        .get('http://localhost:3000/prisma/getCommandBy', {
-          params: {
-            userName: dto.username,
-            serverId: args['guildId'],
-          },
+      await this.dbController
+        .getUserChannelTimeByUsername({
+          userName: dto.username,
+          serverId: args['guildId'],
         })
-        .toPromise()
         .then((res) => {
-          res.data.forEach((element) => {
+          res.forEach((element) => {
+            console.log(typeof element.time);
+            console.log(typeof element.createdAt);
+            console.log(typeof element.channel.channelName);
+
             resultat +=
-              element.releaseAt +
-              ' | ' +
-              element.user.userName +
+              element.createdAt +
               ' | ' +
               element.channel.channelName +
               ' | ' +
-              element.commandId +
-              '\n';
+              element.time +
+              's\n';
           });
         });
-
       return `${resultat}`;
     }
   }
