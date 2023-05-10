@@ -305,14 +305,14 @@ export class BotGateway {
   //   this.logger.log('Called when the current second is 45');
   // }
 
-  @Cron('10 * * * * *')
-  async handleCron() {
-    this.logger.log('Called when the current second is 10');
+  // @Cron('10 * * * * *')
+  // async handleCron() {
+  //   this.logger.log('Called when the current second is 10');
 
-    const date = new Date().toJSON().slice(0, 19).replace('T', ':');
+  //   const date = new Date().toJSON().slice(0, 19).replace('T', ':');
 
-    this.logger.log(`${date}`);
-  }
+  //   this.logger.log(`${date}`);
+  // }
 }
 
 // dbcontroller version

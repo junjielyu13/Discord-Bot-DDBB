@@ -4,7 +4,11 @@ import { AppService } from './service/app.service';
 
 import { DiscordModule } from '@discord-nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { GatewayIntentBits, IntentsBitField } from 'discord.js';
+import {
+  GatewayIntentBits,
+  IntentsBitField,
+  PermissionFlagsBits,
+} from 'discord.js';
 import { BotModule } from './modules/bot.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { DBModule } from './db/db.module';
@@ -33,7 +37,11 @@ dotenv.config();
         },
         registerCommandOptions: [
           {
-            forGuild: configService.get('GUILD_ID_WITH_COMMANDS'),
+            forGuild: configService.get('TEST_GUILD_ID_WITH_COMMANDSS'),
+            removeCommandsBefore: true,
+          },
+          {
+            forGuild: configService.get('DDBBAF_GUILD_ID_WITH_COMMANDS'),
             removeCommandsBefore: true,
           },
         ],
