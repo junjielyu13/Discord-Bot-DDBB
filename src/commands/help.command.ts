@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { Command, Handler } from '@discord-nestjs/core';
 import { CommandInteraction } from 'discord.js';
 
+import { PermissionFlagsBits } from 'discord.js';
+
 import { HttpService } from '@nestjs/axios';
 
 import { EmbedBuilder } from 'discord.js';
@@ -9,6 +11,8 @@ import { EmbedBuilder } from 'discord.js';
 @Command({
   name: 'help',
   description: 'help to server',
+  defaultMemberPermissions: [PermissionFlagsBits.UseApplicationCommands],
+  dmPermission: false,
 })
 @Injectable()
 export class HelpCommand {

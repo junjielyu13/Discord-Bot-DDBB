@@ -2,6 +2,7 @@ import { SlashCommandPipe } from '@discord-nestjs/common';
 import { Command, EventParams, Handler, IA } from '@discord-nestjs/core';
 import { Injectable } from '@nestjs/common';
 import { ClientEvents } from 'discord.js';
+import { PermissionFlagsBits } from 'discord.js';
 
 import { HttpService } from '@nestjs/axios';
 
@@ -10,6 +11,8 @@ import { byDto } from './dto/by.dto';
 @Command({
   name: 'commentsby',
   description: 'get comments by username',
+  defaultMemberPermissions: [PermissionFlagsBits.UseApplicationCommands],
+  dmPermission: false,
 })
 @Injectable()
 export class CommentsBy {

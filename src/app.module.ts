@@ -44,6 +44,10 @@ dotenv.config();
             forGuild: configService.get('DDBBAF_GUILD_ID_WITH_COMMANDS'),
             removeCommandsBefore: true,
           },
+          {
+            forGuild: configService.get('DDBBB_GUILD_ID_WITH_COMMANDS'),
+            removeCommandsBefore: true,
+          },
         ],
       }),
       inject: [ConfigService],
