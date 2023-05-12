@@ -8,7 +8,7 @@ import { DBTempsService } from './service/db.temps.service';
 import { DBUserChannelTimeService } from './service/db.userChannelTime.service';
 import { DBRegistreUserService } from './service/db.registreUser.service';
 import { DBDiaryService } from './service/db.diary.service';
-import { User, Server, RegistreUser, Channel } from '@prisma/client';
+import { User, Server, RegistreUser, Channel, Comment } from '@prisma/client';
 
 @Controller('db')
 export class DBController {
@@ -28,7 +28,11 @@ export class DBController {
     return this.dbUserService.upsertUser(data);
   }
 
-  async upsertServer(data): Promise<Server> {
+  async getUser(data): Promise<User> {
+    return this.dbUserService.getUser(data);
+  }
+
+  async upsertServer(data): Promise<any> {
     return this.dbServerService.upsertServer(data);
   }
 
@@ -36,11 +40,54 @@ export class DBController {
     return this.dbRegistreUserService.upsertRegistreUser(data);
   }
 
-  async upsertChannel(data): Promise<Channel> {
+  async upsertChannel(data): Promise<any> {
     return this.dbChannelService.upsertChannel(data);
+  }
+
+  async getChannelById(data): Promise<any> {
+    return this.dbChannelService.getChannelById(data);
+  }
+
+  async createComment(data): Promise<Comment> {
+    return this.dbCommentService.createComment(data);
+  }
+
+  async createCommand(data): Promise<any> {
+    return this.dbCommantService.createCommand(data);
+  }
+
+  async createTemps(data): Promise<any> {
+    return this.dbTempsService.createTemps(data);
+  }
+
+  async getTempsByUserId(data): Promise<any> {
+    return this.dbTempsService.getTempsByUserId(data);
+  }
+
+  async createUserChannelTime(data): Promise<any> {
+    return this.dbUserChannelTime.createUserChannelTime(data);
   }
 
   async getUserChannelTimeByUsername(data): Promise<any> {
     return this.dbUserChannelTime.getUserChannelTimeByUsername(data);
+  }
+
+  async deleteAllTempsByUserId(data): Promise<any> {
+    return this.dbTempsService.deleteAllTempsByUserId(data);
+  }
+
+  async deleteAllTimeByUserIdUnlessLastOne(data): Promise<any> {
+    let tempIdsToDelete;
+    this.dbTempsService.getAllTempsByUserId(data).then((res) => {
+      tempIdsToDelete = res.slice(1).map((temp) => temp.id);
+    });
+
+    console.log('pre test:');
+    console.log(tempIdsToDelete);
+
+    return await this.dbTempsService.deleteAllTempsByUserIdWithNotIn(
+      data,
+      tempIdsToDelete,
+    );
   }
 }

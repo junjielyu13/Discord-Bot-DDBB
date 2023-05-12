@@ -22,4 +22,13 @@ export class DBUserService {
       },
     });
   }
+
+  async getUser(params: { where: Prisma.UserWhereUniqueInput }): Promise<User> {
+    const { where } = params;
+    return this.prismaService.user.findUnique({
+      where: {
+        userId: where.userId,
+      },
+    });
+  }
 }

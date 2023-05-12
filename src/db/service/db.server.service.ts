@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Prisma, Server } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class DBServerService {
@@ -9,7 +9,7 @@ export class DBServerService {
   async upsertServer(params: {
     where: Prisma.ServerWhereUniqueInput;
     data: Prisma.ServerCreateInput;
-  }): Promise<Server> {
+  }): Promise<any> {
     const { where, data } = params;
     return this.prismaService.server.upsert({
       where: {

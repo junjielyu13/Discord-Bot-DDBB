@@ -21,7 +21,9 @@ export class PrismaController {
       where: {
         userId: body.userId,
       },
-      update: {},
+      update: {
+        userName: body.userName,
+      },
       create: {
         userId: body.userId,
         userName: body.userName,
@@ -44,7 +46,10 @@ export class PrismaController {
       where: {
         ServerId: body.guildId,
       },
-      update: {},
+      update: {
+        ServerId: body.guildId,
+        ServerName: body.guildName,
+      },
       create: {
         ServerId: body.guildId,
         ServerName: body.guildName,
@@ -61,7 +66,10 @@ export class PrismaController {
           serverId: body.serverId,
         },
       },
-      update: {},
+      update: {
+        userId: body.userId,
+        serverId: body.serverId,
+      },
       create: {
         userId: body.userId,
         serverId: body.serverId,

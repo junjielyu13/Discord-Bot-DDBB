@@ -6,11 +6,21 @@ import { Prisma, UserChannelTime } from '@prisma/client';
 export class DBUserChannelTimeService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async createUserChannelTime(
-    data: Prisma.UserChannelTimeCreateInput,
-  ): Promise<UserChannelTime> {
+  async createUserChannelTime(data: any): Promise<any> {
     return this.prismaService.userChannelTime.create({
-      data,
+      data: {
+        time: data.time,
+        user: {
+          connect: {
+            id: data.user.id,
+          },
+        },
+        channel: {
+          connect: {
+            id: data.channel.id,
+          },
+        },
+      },
     });
   }
 

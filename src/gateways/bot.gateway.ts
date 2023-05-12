@@ -30,125 +30,207 @@ export class BotGateway {
   @Once('ready')
   async onReady() {
     this.client.guilds.cache.map(async (guild) => {
-      let guildId = -1;
-
-      this.http
-        .post('http://localhost:3000/prisma/createServer', {
-          guildId: guild.id,
-          guildName: guild.name,
+      this.dbController
+        .upsertServer({
+          where: { ServerId: guild.id },
+          data: { ServerId: guild.id, ServerName: guild.name },
         })
-        .toPromise()
-        .then(async (res) => {
-          guildId = res.data.id;
-        });
-
-      // this.dbController.createUser({
-      //   userId: 'testeSsdsdsdDSstest',
-      //   userName: 'testname',
-      // });
-
-      (await guild.members.fetch()).forEach((member) => {
-        this.http
-          .post('http://localhost:3000/prisma/createUser', {
-            userId: member.id,
-            userName: member.user.username,
-          })
-          .toPromise()
-          .then(async (res) => {
-            this.http
-              .post('http://localhost:3000/prisma/createRegistreUser', {
-                userId: res.data.id,
-                serverId: guildId,
+        .then(async (server) => {
+          (await guild.members.fetch()).forEach((member) => {
+            this.dbController
+              .upsertUser({
+                where: { userId: member.id },
+                data: { userId: member.id, userName: member.user.username },
               })
-              .toPromise()
-              .then();
+              .then(async (user) => {
+                this.dbController.upsertRegistreUser({
+                  where: {
+                    registreUserServerId: {
+                      userId: user.id,
+                      serverId: server.id,
+                    },
+                  },
+                  data: {
+                    userId: user.id,
+                    serverId: server.id,
+                  },
+                });
+              });
           });
-      });
 
-      (await guild.channels.fetch()).forEach((channel) => {
-        this.http
-          .post('http://localhost:3000/prisma/createChannel', {
-            serverId: guildId,
-            channelId: channel.id,
-            channelName: channel.name,
-            channelType: channel.type,
-          })
-          .toPromise()
-          .then();
-      });
+          (await guild.channels.fetch()).forEach((channel) => {
+            this.dbController.upsertChannel({
+              where: {
+                channelId: channel.id,
+              },
+              data: {
+                server: server,
+                channelId: channel.id,
+                channelName: channel.name,
+                channelType: channel.type,
+              },
+            });
+          });
+        });
     });
   }
 
   @On('messageCreate')
   async onMessage(message: Message): Promise<void> {
-    let userId = -1;
-    let channelId = -1;
-
     if (!message.author.bot) {
-      await this.http
-        .get('http://localhost:3000/prisma/getUser', {
-          params: { userId: message.author.id },
-        })
-        .toPromise()
+      this.dbController
+        .getUser({ where: { userId: message.author.id } })
         .then((user) => {
-          userId = user.data.id;
+          this.dbController
+            .getChannelById({ where: { channelId: message.channelId } })
+            .then((channel) => {
+              this.dbController.createComment({
+                commentId: message.id,
+                user: user,
+                message: message.content,
+                channel: channel,
+              });
+            });
         });
-
-      await this.http
-        .get('http://localhost:3000/prisma/getChannel', {
-          params: { channelId: message.channel.id },
-        })
-        .toPromise()
-        .then((channel) => {
-          channelId = channel.data.id;
-        });
-
-      await this.http
-        .post('http://localhost:3000/prisma/createComment', {
-          commentId: message.id,
-          userId: userId,
-          channelId: channelId,
-          message: message.content,
-        })
-        .toPromise()
-        .then();
     }
   }
 
   @On('interactionCreate')
   async onInteraction(action: Interaction): Promise<void> {
-    let userId = -1;
-    let channelId = -1;
-
     if (action) {
-      await this.http
-        .get('http://localhost:3000/prisma/getUser', {
-          params: { userId: action.user.id },
-        })
-        .toPromise()
+      this.dbController
+        .getUser({ where: { userId: action.user.id } })
         .then((user) => {
-          userId = user.data.id;
+          this.dbController
+            .getChannelById({ where: { channelId: action.channel.id } })
+            .then((channel) => {
+              this.dbController.createCommand({
+                commandId: action['commandName'],
+                user: user,
+                channel: channel,
+              });
+            });
         });
-
-      await this.http
-        .get('http://localhost:3000/prisma/getChannel', {
-          params: { channelId: action.channel.id },
-        })
-        .toPromise()
-        .then((channel) => {
-          channelId = channel.data.id;
-        });
-
-      await this.http
-        .post('http://localhost:3000/prisma/createCommand', {
-          commandId: action['commandName'],
-          userId: userId,
-          channelId: channelId,
-        })
-        .toPromise()
-        .then();
     }
   }
+
+  // @On('voiceStateUpdate')
+  // async onVoice(oldState: VoiceState, newState: VoiceState): Promise<void> {
+  //   const member = newState.member;
+  //   if (!member.user.bot) {
+  //     const newChannelID = newState.channelId;
+  //     const oldChannelID = oldState.channelId;
+
+  //     if (newChannelID && !oldChannelID) {
+  //       this.dbController.createTemps({
+  //         userId: member.id,
+  //         channelId: newChannelID,
+  //         statu: false,
+  //       });
+  //     } else if (!newChannelID && oldChannelID) {
+  //       await this.dbController
+  //         .createTemps({
+  //           userId: member.id,
+  //           channelId: oldChannelID,
+  //           statu: false,
+  //         })
+  //         .then(async () => {
+  //           await this.dbController
+  //             .getTempsByUserId({ where: { userId: member.id } })
+  //             .then(async (res) => {
+  //               console.log(res);
+
+  //               let totalSeconds = 0;
+  //               for (let i = 0; i < res.length - 1; i++) {
+  //                 const startTime = new Date(res[i].createdAt).getTime();
+  //                 const endTime = new Date(res[i + 1].createdAt).getTime();
+  //                 totalSeconds += (endTime - startTime) / 1000;
+  //               }
+
+  //               console.log(totalSeconds);
+
+  //               await this.dbController
+  //                 .getUser({ where: { userId: member.id } })
+  //                 .then(async (user) => {
+  //                   await this.dbController
+  //                     .getChannelById({
+  //                       where: { channelId: oldChannelID },
+  //                     })
+  //                     .then(async (channel) => {
+  //                       await this.dbController
+  //                         .createUserChannelTime({
+  //                           user: user,
+  //                           channel: channel,
+  //                           time: String(totalSeconds),
+  //                         })
+  //                         .then(async () => {
+  //                           await this.dbController.deleteAllTempsByUserId({
+  //                             where: { userId: member.id },
+  //                           });
+  //                         });
+  //                     });
+  //                 });
+  //             });
+  //         });
+  //     } else {
+  //       await this.dbController
+  //         .createTemps({
+  //           userId: member.id,
+  //           channelId: newChannelID,
+  //           statu: false,
+  //         })
+  //         .then(async () => {
+  //           await this.dbController
+  //             .getTempsByUserId({ where: { userId: member.id } })
+  //             .then(async (res) => {
+  //               console.log(res);
+
+  //               let totalSeconds = 0;
+  //               for (let i = 0; i < res.length - 1; i++) {
+  //                 const startTime = new Date(res[i].createdAt).getTime();
+  //                 const endTime = new Date(res[i + 1].createdAt).getTime();
+  //                 totalSeconds += (endTime - startTime) / 1000;
+  //               }
+
+  //               console.log(totalSeconds);
+
+  //               await this.dbController
+  //                 .getUser({ where: { userId: member.id } })
+  //                 .then(async (user) => {
+  //                   await this.dbController
+  //                     .getChannelById({
+  //                       where: { channelId: newChannelID },
+  //                     })
+  //                     .then(async (channel) => {
+  //                       await this.dbController
+  //                         .createUserChannelTime({
+  //                           user: user,
+  //                           channel: channel,
+  //                           time: String(totalSeconds),
+  //                         })
+  //                         .then(async () => {
+  //                           // await this.dbController.deleteAllTimeByUserIdUnlessLastOne(
+  //                           //   {
+  //                           //     where: { userId: member.id },
+  //                           //   },
+  //                           // );
+  //                           await this.http
+  //                             .get(
+  //                               'http://localhost:3000/prisma/DeleteTimeChannelByUserId',
+  //                               {
+  //                                 params: { userId: member.id },
+  //                               },
+  //                             )
+  //                             .toPromise()
+  //                             .then();
+  //                         });
+  //                     });
+  //                 });
+  //             });
+  //         });
+  //     }
+  //   }
+  // }
 
   @On('voiceStateUpdate')
   async onVoice(oldState: VoiceState, newState: VoiceState): Promise<void> {
@@ -314,62 +396,3 @@ export class BotGateway {
   //   this.logger.log(`${date}`);
   // }
 }
-
-// dbcontroller version
-// @Once('ready')
-// async onReady() {
-//   this.client.guilds.cache.map(async (guild) => {
-//     this.dbController
-//       .upsertServer({
-//         where: { ServerId: guild.id },
-//         data: { ServerId: guild.id, ServerName: guild.name },
-//       })
-//       .then(async (server) => {
-//         (await guild.members.fetch()).forEach((member) => {
-//           this.dbController
-//             .upsertUser({
-//               where: { userId: member.id },
-//               data: { userId: member.id, userName: member.user.username },
-//             })
-//             .then(async (user) => {
-//               this.dbController.upsertRegistreUser({
-//                 where: {
-//                   registreUserServerId: {
-//                     userId: user.id,
-//                     serverId: server.id,
-//                   },
-//                 },
-//                 data: {
-//                   userId: user.id,
-//                   serverId: server.id,
-//                 },
-//               });
-//             });
-//         });
-
-//         (await guild.channels.fetch()).forEach((channel) => {
-//           this.dbController.upsertChannel({
-//             where: {
-//               channelId: channel.id,
-//             },
-//             data: {
-//               server: server,
-//               channelId: channel.id,
-//               channelName: channel.name,
-//               channelType: channel.type,
-//             },
-//           });
-
-//           // this.http
-//           //   .post('http://localhost:3000/prisma/createChannel', {
-//           //     serverId: server.id,
-//           //     channelId: channel.id,
-//           //     channelName: channel.name,
-//           //     channelType: channel.type,
-//           //   })
-//           //   .toPromise()
-//           //   .then();
-//         });
-//       });
-//   });
-// }
