@@ -27,9 +27,6 @@ export class ChannelTimeBy {
     @IA(SlashCommandPipe) dto: byDto,
     @EventParams() args: ClientEvents['interactionCreate'],
   ): Promise<any> {
-    // console.log('DTO', dto);
-    // console.log('Event args', args);
-    // console.log('Event args', args['guildId']);
     let resultat =
       'Time                          user name              channel Name           message       \n';
 
@@ -61,10 +58,6 @@ export class ChannelTimeBy {
         })
         .then((res) => {
           res.forEach((element) => {
-            console.log(typeof element.time);
-            console.log(typeof element.createdAt);
-            console.log(typeof element.channel.channelName);
-
             resultat +=
               element.createdAt +
               ' | ' +

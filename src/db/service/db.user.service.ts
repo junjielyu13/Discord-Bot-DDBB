@@ -15,7 +15,9 @@ export class DBUserService {
       where: {
         userId: where.userId,
       },
-      update: {},
+      update: {
+        userName: data.userName,
+      },
       create: {
         userId: data.userId,
         userName: data.userName,

@@ -82,9 +82,6 @@ export class DBController {
       tempIdsToDelete = res.slice(1).map((temp) => temp.id);
     });
 
-    console.log('pre test:');
-    console.log(tempIdsToDelete);
-
     return await this.dbTempsService.deleteAllTempsByUserIdWithNotIn(
       data,
       tempIdsToDelete,

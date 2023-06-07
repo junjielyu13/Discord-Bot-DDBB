@@ -40,7 +40,7 @@ export class BotGateway {
             this.dbController
               .upsertUser({
                 where: { userId: member.id },
-                data: { userId: member.id, userName: member.user.username },
+                data: { userId: member.id, userName: member.user.tag },
               })
               .then(async (user) => {
                 this.dbController.upsertRegistreUser({
@@ -81,6 +81,11 @@ export class BotGateway {
       this.dbController
         .getUser({ where: { userId: message.author.id } })
         .then((user) => {
+          this.dbController.upsertUser({
+            where: { userId: message.author.id },
+            data: { userId: message.author.id, userName: message.author.tag },
+          });
+
           this.dbController
             .getChannelById({ where: { channelId: message.channelId } })
             .then((channel) => {
@@ -101,6 +106,14 @@ export class BotGateway {
       this.dbController
         .getUser({ where: { userId: action.user.id } })
         .then((user) => {
+          this.dbController.upsertUser({
+            where: { userId: action.user.id },
+            data: {
+              userId: action.user.id,
+              userName: action.user.tag,
+            },
+          });
+
           this.dbController
             .getChannelById({ where: { channelId: action.channel.id } })
             .then((channel) => {
@@ -235,6 +248,15 @@ export class BotGateway {
   @On('voiceStateUpdate')
   async onVoice(oldState: VoiceState, newState: VoiceState): Promise<void> {
     const member = newState.member;
+
+    this.dbController.upsertUser({
+      where: { userId: member.id },
+      data: {
+        userId: member.user.id,
+        userName: member.user.tag,
+      },
+    });
+
     if (!member.user.bot) {
       const newChannelID = newState.channelId;
       const oldChannelID = oldState.channelId;
