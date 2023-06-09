@@ -29,10 +29,12 @@ export class HelpCommand {
         url: 'https://github.com/junjielyu13/Discord-Bot-DDBB',
       })
       .setDescription('Some description here')
-      .setThumbnail('https://i.imgur.com/AfFp7pu.p')
-      .addFields({ name: '/help', value: 'Some value here' })
-      .addFields({ name: '/ping', value: 'Some value here' })
-      .addFields({ name: '/hello', value: 'Some value here' })
+      .setThumbnail(
+        'https://raw.githubusercontent.com/junjielyu13/Discord-Bot-DDBB/main/public/img/icono.jpg',
+      )
+      .addFields({ name: '/help', value: 'help page' })
+      .addFields({ name: '/ping', value: 'test page' })
+      .addFields({ name: '/hello', value: 'hello page' })
       .addFields({ name: 'Regular field title', value: 'Some value here' })
       .addFields({ name: 'Regular field title', value: 'Some value here' })
       .addFields({ name: 'Regular field title', value: 'Some value here' })

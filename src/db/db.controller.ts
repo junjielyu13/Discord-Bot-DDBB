@@ -52,6 +52,10 @@ export class DBController {
     return this.dbCommentService.createComment(data);
   }
 
+  getAllComments(data): Promise<any> {
+    return this.dbCommentService.getAllComments(data);
+  }
+
   async createCommand(data): Promise<any> {
     return this.dbCommantService.createCommand(data);
   }

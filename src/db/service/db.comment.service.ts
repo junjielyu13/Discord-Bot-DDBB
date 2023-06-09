@@ -23,4 +23,36 @@ export class DBCommentService {
       },
     });
   }
+
+  getAllComments(where: any): any {
+    return this.prismaService.comment.findMany({
+      where: {
+        channel: {
+          server: {
+            ServerId: where.serverId,
+          },
+        },
+      },
+      select: {
+        message: true,
+        releaseAt: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+        channel: {
+          select: {
+            channelName: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          releaseAt: 'desc',
+        },
+      ],
+      // take: 25,
+    });
+  }
 }
