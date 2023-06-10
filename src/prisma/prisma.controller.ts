@@ -221,7 +221,7 @@ export class PrismaController {
           releaseAt: 'desc',
         },
       ],
-      take: 25,
+      take: 10,
     });
   }
 

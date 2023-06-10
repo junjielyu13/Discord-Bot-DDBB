@@ -24,7 +24,7 @@ export class DBCommentService {
     });
   }
 
-  getAllComments(where: any): any {
+  async getAllComments(where: any): Promise<any> {
     return this.prismaService.comment.findMany({
       where: {
         channel: {
@@ -52,7 +52,42 @@ export class DBCommentService {
           releaseAt: 'desc',
         },
       ],
-      // take: 25,
+      take: 10,
+    });
+  }
+
+  async getAllCommentsByUername(where: any): Promise<any> {
+    return this.prismaService.comment.findMany({
+      where: {
+        channel: {
+          server: {
+            ServerId: where.serverId,
+          },
+        },
+        user: {
+          userName: where.userName,
+        },
+      },
+      select: {
+        message: true,
+        releaseAt: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+        channel: {
+          select: {
+            channelName: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          releaseAt: 'desc',
+        },
+      ],
+      take: 10,
     });
   }
 }
