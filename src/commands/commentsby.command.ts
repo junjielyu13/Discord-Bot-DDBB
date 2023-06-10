@@ -34,6 +34,7 @@ export class CommentsBy {
 
     let resultat = '';
     if (dto.username.toLowerCase() == 'all' || dto.username === undefined) {
+      resultat += `                             All comments List, page: ${dto.page}                              \n`;
       await this.dbController
         .getAllComments({ serverId: args['guildId'], page: dto.page * 10 - 10 })
         .then((comments) => {
@@ -52,6 +53,7 @@ export class CommentsBy {
 
       interaction.reply(resultat);
     } else {
+      resultat += `                         All comments List for ${dto.username}, page: ${dto.page}                        \n`;
       await this.dbController
         .getAllCommentsByUsename({
           serverId: args['guildId'],
