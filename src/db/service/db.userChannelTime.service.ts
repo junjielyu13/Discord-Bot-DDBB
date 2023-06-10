@@ -24,6 +24,39 @@ export class DBUserChannelTimeService {
     });
   }
 
+  async getAllUserChannelTime(where: any): Promise<any> {
+    return this.prismaService.userChannelTime.findMany({
+      where: {
+        channel: {
+          server: {
+            ServerId: where.serverId,
+          },
+        },
+      },
+      select: {
+        time: true,
+        createdAt: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+        channel: {
+          select: {
+            channelName: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          createdAt: 'desc',
+        },
+      ],
+      skip: where.page,
+      take: 10,
+    });
+  }
+
   async getUserChannelTimeByUsername(where: any): Promise<any> {
     return this.prismaService.userChannelTime.findMany({
       where: {
@@ -50,7 +83,8 @@ export class DBUserChannelTimeService {
           createdAt: 'desc',
         },
       ],
-      take: 25,
+      skip: where.page,
+      take: 10,
     });
   }
 }
