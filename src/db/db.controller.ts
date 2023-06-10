@@ -18,7 +18,7 @@ export class DBController {
     private readonly dbServerService: DBServerService,
     private readonly dbChannelService: DBChannelService,
     private readonly dbCommentService: DBCommentService,
-    private readonly dbCommantService: DBCommandService,
+    private readonly dbCommandService: DBCommandService,
     private readonly dbTempsService: DBTempsService,
     private readonly dbUserChannelTime: DBUserChannelTimeService,
     private readonly dbDiaryService: DBDiaryService,
@@ -61,7 +61,15 @@ export class DBController {
   }
 
   async createCommand(data): Promise<any> {
-    return this.dbCommantService.createCommand(data);
+    return this.dbCommandService.createCommand(data);
+  }
+
+  async getAllCommands(data): Promise<any> {
+    return this.dbCommandService.getAllCommands(data);
+  }
+
+  async getAllCommandsByUsename(data): Promise<any> {
+    return this.dbCommandService.getAllCommandsByUername(data);
   }
 
   async createTemps(data): Promise<any> {

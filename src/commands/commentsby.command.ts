@@ -16,7 +16,7 @@ import { DBController } from '../db/db.controller';
 
 @Command({
   name: 'commentsby',
-  description: 'get comments by username (option: userName, default: all)',
+  description: 'get comments by username',
   defaultMemberPermissions: [PermissionFlagsBits.UseApplicationCommands],
   dmPermission: false,
 })
@@ -30,11 +30,9 @@ export class CommentsBy {
     @EventParams() args: ClientEvents['interactionCreate'],
     @InteractionEvent() interaction,
   ): Promise<any> {
-    console.log(args['guildId']);
-
     let resultat = '';
     if (dto.username.toLowerCase() == 'all' || dto.username === undefined) {
-      resultat += `                             All comments List, page: ${dto.page}                              \n`;
+      resultat += `                             All comments List, page: ${dto.page}                              \n\n`;
       await this.dbController
         .getAllComments({ serverId: args['guildId'], page: dto.page * 10 - 10 })
         .then((comments) => {
@@ -53,7 +51,7 @@ export class CommentsBy {
 
       interaction.reply(resultat);
     } else {
-      resultat += `                         All comments List for ${dto.username}, page: ${dto.page}                        \n`;
+      resultat += `                         All comments List for ${dto.username}, page: ${dto.page}                        \n\n`;
       await this.dbController
         .getAllCommentsByUsename({
           serverId: args['guildId'],
@@ -62,8 +60,6 @@ export class CommentsBy {
         })
         .then((comments) => {
           comments.forEach((comment) => {
-            console.log(comment);
-
             resultat += `${this.convertTime(comment.releaseAt).padStart(
               20,
               ' ',
