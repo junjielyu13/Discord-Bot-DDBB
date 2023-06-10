@@ -30,14 +30,14 @@ export class CommentsBy {
     @EventParams() args: ClientEvents['interactionCreate'],
     @InteractionEvent() interaction,
   ): Promise<any> {
+    console.log(args['guildId']);
+
     let resultat = '';
     if (dto.username.toLowerCase() == 'all' || dto.username === undefined) {
       await this.dbController
-        .getAllComments({ serverId: args['guildId'] })
+        .getAllComments({ serverId: args['guildId'], page: dto.page * 10 - 10 })
         .then((comments) => {
           comments.forEach((comment) => {
-            console.log(comment);
-
             resultat += `${this.convertTime(comment.releaseAt).padStart(
               20,
               ' ',
@@ -56,6 +56,7 @@ export class CommentsBy {
         .getAllCommentsByUsename({
           serverId: args['guildId'],
           userName: dto.username,
+          page: dto.page * 10 - 10,
         })
         .then((comments) => {
           comments.forEach((comment) => {

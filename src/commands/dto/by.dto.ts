@@ -5,8 +5,13 @@ export class byDto {
     name: 'username',
     description: 'get comments by username',
     type: ParamType.STRING,
-    // required: true,
-    // autocomplete: true,
   })
   username: string;
+
+  @Param({
+    name: 'page',
+    description: 'page of comments list',
+    type: ParamType.INTEGER,
+  })
+  page: number;
 }

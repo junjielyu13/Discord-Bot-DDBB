@@ -52,6 +52,7 @@ export class DBCommentService {
           releaseAt: 'desc',
         },
       ],
+      skip: where.page,
       take: 10,
     });
   }
@@ -87,6 +88,7 @@ export class DBCommentService {
           releaseAt: 'desc',
         },
       ],
+      skip: where.page,
       take: 10,
     });
   }
