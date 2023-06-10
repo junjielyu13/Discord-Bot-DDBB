@@ -92,6 +92,10 @@ export class DBController {
     return this.dbUserChannelTime.getUserChannelTimeByUsername(data);
   }
 
+  async getAllUserChannelTimeByDate(data): Promise<any> {
+    return this.dbUserChannelTime.getAllUserChannelTimeByDate(data);
+  }
+
   async deleteAllTempsByUserId(data): Promise<any> {
     return this.dbTempsService.deleteAllTempsByUserId(data);
   }

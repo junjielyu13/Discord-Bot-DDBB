@@ -1,12 +1,12 @@
 import { Param, ParamType } from '@discord-nestjs/core';
 
-export class byDto {
+export class diarybyDto {
   @Param({
-    name: 'username',
-    description: 'get comments by username',
+    name: 'date',
+    description: 'get diary channel time by date type:(yyyy-mm-dd)',
     type: ParamType.STRING,
   })
-  username: string;
+  date: string;
 
   @Param({
     name: 'page',

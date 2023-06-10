@@ -46,8 +46,6 @@ export class ChannelTimeBy {
         })
         .then((channelTimes) => {
           channelTimes.forEach((channelTime) => {
-            console.log(typeof channelTime.time);
-
             resultat += `${this.convertTime(channelTime.createdAt).padStart(
               20,
               ' ',
