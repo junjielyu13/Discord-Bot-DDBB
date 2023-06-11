@@ -29,28 +29,60 @@ export class Diaryby {
     @EventParams() args: ClientEvents['interactionCreate'],
     @InteractionEvent() interaction,
   ): Promise<any> {
-    let resultat = `                             All Channel Time List, page: ${dto.page}                              \n\n`;
+    let resultat = `                             All Channel Time List for ${dto.date}, page: ${dto.page}                              \n\n`;
 
-    await this.dbController
-      .getAllUserChannelTimeByDate({
-        today: dto.date,
-        nextDay: this.getNextDayDate(dto.date),
-        page: dto.page * 10 - 10,
-      })
-      .then((channelTimes) => {
-        channelTimes.forEach((channelTime) => {
-          resultat += `${this.convertTime(channelTime.createdAt).padStart(
-            20,
-            ' ',
-          )} | ${channelTime.user.userName.padStart(
-            30,
-            ' ',
-          )} | ${channelTime.channel.channelName.padStart(
-            15,
-            ' ',
-          )}  | ${Math.abs(parseFloat(channelTime.time)).toFixed(2)}s \n\n`;
+    if (typeof dto.page !== 'number') {
+      dto.page = 1;
+    }
+
+    if (
+      dto.date === 'hoy' ||
+      dto.date === 'today' ||
+      dto.date == null ||
+      dto.date === undefined
+    ) {
+      await this.dbController
+        .getAllUserChannelTimeByDate({
+          today: this.getCurrentDate(),
+          nextDay: this.getNextDayDate(this.getCurrentDate()),
+          page: dto.page * 10 - 10,
+        })
+        .then((channelTimes) => {
+          channelTimes.forEach((channelTime) => {
+            resultat += `${this.convertTime(channelTime.createdAt).padStart(
+              20,
+              ' ',
+            )} | ${channelTime.user.userName.padStart(
+              30,
+              ' ',
+            )} | ${channelTime.channel.channelName.padStart(
+              15,
+              ' ',
+            )}  | ${Math.abs(parseFloat(channelTime.time)).toFixed(2)}s \n\n`;
+          });
         });
-      });
+    } else {
+      await this.dbController
+        .getAllUserChannelTimeByDate({
+          today: dto.date,
+          nextDay: this.getNextDayDate(dto.date),
+          page: dto.page * 10 - 10,
+        })
+        .then((channelTimes) => {
+          channelTimes.forEach((channelTime) => {
+            resultat += `${this.convertTime(channelTime.createdAt).padStart(
+              20,
+              ' ',
+            )} | ${channelTime.user.userName.padStart(
+              30,
+              ' ',
+            )} | ${channelTime.channel.channelName.padStart(
+              15,
+              ' ',
+            )}  | ${Math.abs(parseFloat(channelTime.time)).toFixed(2)}s \n\n`;
+          });
+        });
+    }
 
     interaction.reply(resultat);
   }
@@ -71,5 +103,14 @@ export class Diaryby {
     const date = new Date(dateString);
     date.setDate(date.getDate() + 1);
     return date.toISOString().split('T')[0];
+  }
+
+  private getCurrentDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 }

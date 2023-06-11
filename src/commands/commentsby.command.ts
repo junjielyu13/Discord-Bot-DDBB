@@ -34,7 +34,10 @@ export class CommentsBy {
     if (dto.username.toLowerCase() == 'all' || dto.username === undefined) {
       resultat += `                             All comments List, page: ${dto.page}                              \n\n`;
       await this.dbController
-        .getAllComments({ serverId: args['guildId'], page: dto.page * 10 - 10 })
+        .getAllComments({
+          serverId: args['guildId'],
+          page: Math.floor(dto.page * 10 - 10),
+        })
         .then((comments) => {
           comments.forEach((comment) => {
             resultat += `${this.convertTime(comment.releaseAt).padStart(
@@ -56,7 +59,7 @@ export class CommentsBy {
         .getAllCommentsByUsename({
           serverId: args['guildId'],
           userName: dto.username,
-          page: dto.page * 10 - 10,
+          page: Math.floor(dto.page * 10 - 10),
         })
         .then((comments) => {
           comments.forEach((comment) => {

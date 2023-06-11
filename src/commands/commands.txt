@@ -8,12 +8,12 @@ commandsBy: (option: userName, default: all)
 channelTimeBy: (option username)
 diaryBy: (option date)
 
-staticComments: (option: userName, default: all)  --- count 
-staticDiaryComments: (option: userName, default: all) --- count diary
-staticCommands: (option: userName, default: all)   --- count
-staticDiaryCommands: (option: userName, default: all) --- count diary
-staticChannelsTemps: (option: userName, default: all) --- count
-staticDiaryTemps: (option: userName, default: all) --- count
+rankCommentsby:   --- count 
+rankDiaryComments:  --- count diary
+rankcCommandsby:    --- count
+rankDiaryCommands: --- count diary
+rankChannelsTempsby:  --- count
+rankDiaryTemps: --- count
 
 
 setVisibility: (option visibility(true/false))
