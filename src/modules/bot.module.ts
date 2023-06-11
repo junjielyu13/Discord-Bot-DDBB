@@ -12,6 +12,7 @@ import { CommandsBy } from '../commands/commandsby.command';
 import { ChannelTimeBy } from '../commands/channeltimeby.command';
 import { Diaryby } from '../commands/diaryby.command';
 import { RankComments } from '../commands/rankcomments.command';
+import { RankCommentsDiary } from '../commands/rankcommentsdiary.command';
 import { RankCommands } from '../commands/rankcommands.command';
 import { RankChannelTime } from '../commands/rankchanneltime.command';
 
@@ -35,6 +36,7 @@ import { RankChannelTime } from '../commands/rankchanneltime.command';
     ChannelTimeBy,
     Diaryby,
     RankComments,
+    RankCommentsDiary,
     RankCommands,
     RankChannelTime,
   ],
