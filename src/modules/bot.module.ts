@@ -14,8 +14,9 @@ import { Diaryby } from '../commands/diaryby.command';
 import { RankComments } from '../commands/rankcomments.command';
 import { RankCommentsDiary } from '../commands/rankcommentsdiary.command';
 import { RankCommands } from '../commands/rankcommands.command';
-import { RankChannelTime } from '../commands/rankchanneltime.command';
 import { RankCommandsDiary } from '../commands/rankcommandsdiary.command';
+import { RankChannelTime } from '../commands/rankchanneltime.command';
+import { RankChannelTimeDiary } from '../commands/rankchanneltimediary.command';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { RankCommandsDiary } from '../commands/rankcommandsdiary.command';
     RankCommands,
     RankCommandsDiary,
     RankChannelTime,
+    RankChannelTimeDiary,
   ],
   exports: [],
 })

@@ -8,7 +8,7 @@ import { DBTempsService } from './service/db.temps.service';
 import { DBUserChannelTimeService } from './service/db.userChannelTime.service';
 import { DBRegistreUserService } from './service/db.registreUser.service';
 import { DBDiaryService } from './service/db.diary.service';
-import { User, Server, RegistreUser, Channel, Comment } from '@prisma/client';
+import { User, RegistreUser, Comment } from '@prisma/client';
 
 @Controller('db')
 export class DBController {
