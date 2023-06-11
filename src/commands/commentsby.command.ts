@@ -34,7 +34,7 @@ export class CommentsBy {
     if (dto.username.toLowerCase() == 'all' || dto.username === undefined) {
       resultat += `                             All comments List, page: ${dto.page}                              \n\n`;
       await this.dbController
-        .getAllComments({
+        .getAllCommentsByPage({
           serverId: args['guildId'],
           page: Math.floor(dto.page * 10 - 10),
         })

@@ -56,6 +56,10 @@ export class DBController {
     return this.dbCommentService.getAllComments(data);
   }
 
+  async getAllCommentsByPage(data): Promise<any> {
+    return this.dbCommentService.getAllCommentsByPage(data);
+  }
+
   async getAllCommentsByUsename(data): Promise<any> {
     return this.dbCommentService.getAllCommentsByUername(data);
   }
@@ -66,6 +70,10 @@ export class DBController {
 
   async getAllCommands(data): Promise<any> {
     return this.dbCommandService.getAllCommands(data);
+  }
+
+  async getAllCommandsByPage(data): Promise<any> {
+    return this.dbCommandService.getAllCommandsByPage(data);
   }
 
   async getAllCommandsByUsename(data): Promise<any> {

@@ -52,6 +52,37 @@ export class DBCommentService {
           releaseAt: 'desc',
         },
       ],
+    });
+  }
+
+  async getAllCommentsByPage(where: any): Promise<any> {
+    return this.prismaService.comment.findMany({
+      where: {
+        channel: {
+          server: {
+            ServerId: where.serverId,
+          },
+        },
+      },
+      select: {
+        message: true,
+        releaseAt: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+        channel: {
+          select: {
+            channelName: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          releaseAt: 'desc',
+        },
+      ],
       skip: where.page,
       take: 10,
     });

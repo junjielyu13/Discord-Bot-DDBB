@@ -33,7 +33,10 @@ export class CommandsBy {
     if (dto.username.toLowerCase() == 'all' || dto.username === undefined) {
       resultat += `                             All commands List, page: ${dto.page}                              \n\n`;
       await this.dbController
-        .getAllCommands({ serverId: args['guildId'], page: dto.page * 10 - 10 })
+        .getAllCommandsByPage({
+          serverId: args['guildId'],
+          page: dto.page * 10 - 10,
+        })
         .then((commands) => {
           commands.forEach((command) => {
             resultat += `${this.convertTime(command.releaseAt).padStart(

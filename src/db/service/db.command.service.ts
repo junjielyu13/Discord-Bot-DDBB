@@ -51,6 +51,37 @@ export class DBCommandService {
           releaseAt: 'desc',
         },
       ],
+    });
+  }
+
+  async getAllCommandsByPage(where: any): Promise<any> {
+    return this.prismaService.command.findMany({
+      where: {
+        channel: {
+          server: {
+            ServerId: where.serverId,
+          },
+        },
+      },
+      select: {
+        commandId: true,
+        releaseAt: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+        channel: {
+          select: {
+            channelName: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          releaseAt: 'desc',
+        },
+      ],
       skip: where.page,
       take: 10,
     });
