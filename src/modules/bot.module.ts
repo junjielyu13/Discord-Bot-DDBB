@@ -15,6 +15,7 @@ import { RankComments } from '../commands/rankcomments.command';
 import { RankCommentsDiary } from '../commands/rankcommentsdiary.command';
 import { RankCommands } from '../commands/rankcommands.command';
 import { RankChannelTime } from '../commands/rankchanneltime.command';
+import { RankCommandsDiary } from '../commands/rankcommandsdiary.command';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { RankChannelTime } from '../commands/rankchanneltime.command';
     RankComments,
     RankCommentsDiary,
     RankCommands,
+    RankCommandsDiary,
     RankChannelTime,
   ],
   exports: [],
