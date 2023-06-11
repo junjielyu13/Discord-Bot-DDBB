@@ -40,7 +40,7 @@ export class ChannelTimeBy {
       resultat += `                             All Channel Time List, page: ${dto.page}                              \n\n`;
 
       await this.dbController
-        .getAllUserChannelTime({
+        .getAllUserChannelTimeByPage({
           serverId: args['guildId'],
           page: dto.page * 10 - 10,
         })

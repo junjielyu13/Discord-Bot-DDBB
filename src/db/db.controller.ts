@@ -96,6 +96,10 @@ export class DBController {
     return this.dbUserChannelTime.getAllUserChannelTime(data);
   }
 
+  async getAllUserChannelTimeByPage(data): Promise<any> {
+    return this.dbUserChannelTime.getAllUserChannelTimeByPage(data);
+  }
+
   async getAllUserChannelTimeByUsename(data): Promise<any> {
     return this.dbUserChannelTime.getUserChannelTimeByUsername(data);
   }
