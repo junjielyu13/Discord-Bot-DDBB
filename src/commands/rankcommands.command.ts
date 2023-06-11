@@ -11,13 +11,13 @@ import { PermissionFlagsBits } from 'discord.js';
 import { DBController } from '../db/db.controller';
 
 @Command({
-  name: 'rankcomments',
-  description: 'rank of top comments by user',
+  name: 'rankcommands',
+  description: 'rank of top commands by user',
   defaultMemberPermissions: [PermissionFlagsBits.UseApplicationCommands],
   dmPermission: false,
 })
 @Injectable()
-export class RankComments {
+export class RankCommands {
   constructor(private readonly dbController: DBController) {}
 
   @Handler()
@@ -25,9 +25,9 @@ export class RankComments {
     @EventParams() args: ClientEvents['interactionCreate'],
     @InteractionEvent() interaction,
   ): Promise<any> {
-    let results = 'TOP10 Users who Comments the most \n\n';
+    let results = 'TOP10 Users who Commands the most \n\n';
     await this.dbController
-      .getAllComments({
+      .getAllCommands({
         serverId: args['guildId'],
       })
       .then((comments) => {

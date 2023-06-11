@@ -12,6 +12,7 @@ import { CommandsBy } from '../commands/commandsby.command';
 import { ChannelTimeBy } from '../commands/channeltimeby.command';
 import { Diaryby } from '../commands/diaryby.command';
 import { RankComments } from '../commands/rankcomments.command';
+import { RankCommands } from '../commands/rankcommands.command';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { RankComments } from '../commands/rankcomments.command';
     ChannelTimeBy,
     Diaryby,
     RankComments,
+    RankCommands,
   ],
   exports: [],
 })
