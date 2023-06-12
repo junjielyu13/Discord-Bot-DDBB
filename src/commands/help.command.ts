@@ -32,14 +32,43 @@ export class HelpCommand {
       .setThumbnail(
         'https://raw.githubusercontent.com/junjielyu13/Discord-Bot-DDBB/main/public/img/icono.jpg',
       )
+      .addFields({ name: '/hello', value: 'hello~' })
       .addFields({ name: '/help', value: 'help page' })
-      .addFields({ name: '/ping', value: 'test page' })
-      .addFields({ name: '/hello', value: 'hello page' })
-      .addFields({ name: 'Regular field title', value: 'Some value here' })
-      .addFields({ name: 'Regular field title', value: 'Some value here' })
-      .addFields({ name: 'Regular field title', value: 'Some value here' })
-      .addFields({ name: 'Regular field title', value: 'Some value here' })
-      .addFields({ name: 'Regular field title', value: 'Some value here' })
+      .addFields({ name: '/ping', value: 'testing connection' })
+      .addFields({ name: '/commentsby', value: 'get comments by username' })
+      .addFields({ name: '/commandsby', value: 'get commands by username' })
+      .addFields({
+        name: '/channeltimeby',
+        value: 'get channel time by username',
+      })
+      .addFields({
+        name: '/diaryby',
+        value: 'get channel time diary by username',
+      })
+      .addFields({
+        name: '/rankcomments',
+        value: 'Top 10 most comments by user',
+      })
+      .addFields({
+        name: '/rankcommentsdiary',
+        value: 'Top 10 most comments by diary',
+      })
+      .addFields({
+        name: '/rankcommands',
+        value: 'Top 10 most commands by user',
+      })
+      .addFields({
+        name: '/rankcommandsdiary',
+        value: 'Top 10 most commands by diary',
+      })
+      .addFields({
+        name: '/rankchanneltime',
+        value: 'Top 10 most channel time by user',
+      })
+      .addFields({
+        name: '/rankchanneltimediary',
+        value: 'Top 10 most channel time by diary',
+      })
       .setTimestamp();
 
     interaction.reply({ embeds: [exampleEmbed] });
