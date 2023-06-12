@@ -16,8 +16,6 @@ import { EmbedBuilder } from 'discord.js';
 })
 @Injectable()
 export class HelpCommand {
-  constructor(private readonly http: HttpService) {}
-
   @Handler()
   async help(interaction: CommandInteraction): Promise<any> {
     const exampleEmbed = new EmbedBuilder()
@@ -28,7 +26,7 @@ export class HelpCommand {
         name: 'Itaca',
         url: 'https://github.com/junjielyu13/Discord-Bot-DDBB',
       })
-      .setDescription('Some description here')
+      .setDescription('Ítaca Instruction Encyclopedia')
       .setThumbnail(
         'https://raw.githubusercontent.com/junjielyu13/Discord-Bot-DDBB/main/public/img/icono.jpg',
       )

@@ -15,8 +15,6 @@ import { EmbedBuilder } from 'discord.js';
 })
 @Injectable()
 export class HelloCommand {
-  constructor(private readonly http: HttpService) {}
-
   @Handler()
   async hello(interaction: CommandInteraction): Promise<any> {
     const exampleEmbed = new EmbedBuilder()
@@ -24,27 +22,16 @@ export class HelloCommand {
       .setTitle('Itaca')
       .setURL('https://github.com/junjielyu13/Discord-Bot-DDBB')
       .setAuthor({
-        name: 'Your discord Bot',
+        name: 'Your discord Channel Bot',
         url: 'https://github.com/junjielyu13/Discord-Bot-DDBB',
       })
-      .setDescription('Some description here')
-      .setThumbnail('https://i.imgur.com/AfFp7pu.p')
-      .addFields(
-        { name: 'Regular field title', value: 'Some value here' },
-        { name: '\u200B', value: '\u200B' },
-        { name: 'Inline field title', value: 'Some value here', inline: true },
-        { name: 'Inline field title', value: 'Some value here', inline: true },
+      .setDescription(
+        "Hi, I'm your discord bot ítaca! I am a script Bot specially designed and programmed to provide various information gathering and daily assistance services for your channel. I have been designed with a high degree of automation and artificial intelligence to multi-task and make your channel more convenient and comfortable❤️😘 \n\n try /help to see what other functions I have!",
       )
-      .addFields({
-        name: 'Inline field title',
-        value: 'Some value here',
-        inline: true,
-      })
-      .setImage('https://i.imgur.com/AfFp7pu.png')
-      .setTimestamp()
-      .setFooter({
-        text: 'Some footer text here',
-      });
+      .setThumbnail(
+        'https://raw.githubusercontent.com/junjielyu13/Discord-Bot-DDBB/main/public/img/icono.jpg',
+      )
+      .setTimestamp();
 
     interaction.reply({ embeds: [exampleEmbed] });
   }
